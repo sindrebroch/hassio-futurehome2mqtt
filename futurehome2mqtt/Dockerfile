@@ -19,7 +19,17 @@ COPY ./ $HOME/
 RUN /usr/local/bin/pip3 --version
 RUN /usr/local/bin/python3 --version
 
-RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        python3-dev=3.11.2-1+b1 \
+        python3=3.11.2-1+b1 \
+    && curl https://bootstrap.pypa.io/get-pip.py | python3 \
+    && update-alternatives \
+        --install /usr/bin/python python /usr/bin/python3 10 \
+    \
+    && pip3 install --no-cache-dir -r /tmp/requirements.txt
 
 RUN chmod a+x /$HOME/run.sh
 
