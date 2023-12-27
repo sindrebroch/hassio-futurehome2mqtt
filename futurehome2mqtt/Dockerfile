@@ -7,8 +7,7 @@ ENV HOME=/app
 RUN mkdir -p $HOME
 WORKDIR ${HOME}
 
-RUN apk add --no-cache python3 py-pip && \
-    pip3 install --upgrade pip
+RUN apk add --no-cache python3
 
 # Copy data for add-on
 COPY ./ $HOME/
