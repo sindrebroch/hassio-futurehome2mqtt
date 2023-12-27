@@ -1,4 +1,4 @@
-ARG BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python:12.0.2
 FROM $BUILD_FROM
 
 ENV LANG C.UTF-8
@@ -7,17 +7,8 @@ ENV HOME=/app
 RUN mkdir -p $HOME
 WORKDIR ${HOME}
 
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 # Copy data for add-on
 COPY ./ $HOME/
-
-RUN apk add --no-cache --virtual py3-pip
-
-RUN apk add --no-cache python3 
-
-# RUN pip3 install --upgrade pip
 
 RUN pip3 install -r requirements.txt
 
