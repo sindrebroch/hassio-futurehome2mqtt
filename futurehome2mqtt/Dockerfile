@@ -10,7 +10,8 @@ WORKDIR ${HOME}
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN apk add --no-cache --virtual python3 py3-pip
+RUN apk add --no-cache --virtual python3 py3-pip && \
+    pip3 install --upgrade pip
 
 # Copy data for add-on
 COPY ./ $HOME/
