@@ -7,12 +7,15 @@ ENV HOME=/app
 RUN mkdir -p $HOME
 WORKDIR ${HOME}
 
-RUN apk add --no-cache python3 py-pip
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apk add --no-cache --virtual python3 py3-pip
 
 # Copy data for add-on
 COPY ./ $HOME/
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 RUN chmod a+x /$HOME/run.sh
 
 
