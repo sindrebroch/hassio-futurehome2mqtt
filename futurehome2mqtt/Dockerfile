@@ -16,10 +16,8 @@ COPY requirements.txt /tmp/requirements.txt
 # Copy data for add-on
 COPY ./ $HOME/
 
-RUN pip --version
-RUN pip3 --version
-RUN python --version
-RUN python3 --version
+RUN /usr/local/bin/pip3 --version
+RUN /usr/local/bin/python3 --version
 
 RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
