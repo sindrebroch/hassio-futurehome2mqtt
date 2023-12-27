@@ -8,9 +8,10 @@ RUN mkdir -p $HOME
 WORKDIR ${HOME}
 
 # Copy data for add-on
+COPY requirements.txt /tmp/
 COPY ./ $HOME/
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r /tmp/requirements.txt
 
 RUN chmod a+x /$HOME/run.sh
 
