@@ -16,8 +16,10 @@ COPY requirements.txt /tmp/requirements.txt
 # Copy data for add-on
 COPY ./ $HOME/
 
-RUN curl https://bootstrap.pypa.io/get-pip.py | python3
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 
+RUN pip --version
+RUN pip3 --version
+RUN python --version
+RUN python3 --version
 
 RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
