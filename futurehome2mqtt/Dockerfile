@@ -1,5 +1,5 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base-python:12.0.2
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}
 
 ENV LANG C.UTF-8
 ENV HOME=/app
