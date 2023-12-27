@@ -1,14 +1,17 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base-python:11.0.0
-FROM $BUILD_FROM
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/armv7:stable
+FROM ${BUILD_FROM}
 
-# Copy Python requirements file
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-COPY run.sh .
-RUN chmod a+x run.sh
+RUN apk add --no-cache py3-pip
+RUN pip3 install --break-system-packages --no-cache-dir --upgrade \
+    paho-mqtt==1.6.1 \
+    requests==2.31.0
 
 # Copy data for add-on
 COPY . .
+
+RUN chmod a+x run.sh
 
 CMD [ "/run.sh" ]
