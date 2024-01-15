@@ -24,6 +24,7 @@ def battery(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device_class": "battery",
+        "device": "",
         "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val | round(0) }}"
     }
