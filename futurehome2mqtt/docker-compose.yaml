@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  futurehome2mqtt:
+    build: .
+
+    # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
+    # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
+    environment: 
+      FIMPSERVER: cube.home
+      FIMPUSERNAME: mqttuser
+      FIMPPASSWORD: mqttpassword
+      FIMPPORT: 1884
+      CLIENT_ID: fimp2mqtt
+      DEBUG: false
+      SELECTED_DEVICES: ""

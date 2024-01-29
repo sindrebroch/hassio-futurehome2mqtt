@@ -1,0 +1,17 @@
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/armv7:stable
+FROM ${BUILD_FROM}
+
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+RUN apk add --no-cache py3-pip
+RUN pip3 install --break-system-packages --no-cache-dir --upgrade \
+    paho-mqtt==1.6.1 \
+    requests==2.31.0
+
+# Copy data for add-on
+COPY . .
+
+RUN chmod a+x run.sh
+
+CMD [ "/run.sh" ]
