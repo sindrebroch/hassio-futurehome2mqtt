@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile-amd64
 
-    env_file: .env
+    env_file: env
 
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62

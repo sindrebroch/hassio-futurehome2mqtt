@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/env bashio
 set -e
 
 export FIMPSERVER=$(bashio::config 'fimpserver')
@@ -9,6 +9,8 @@ export CLIENT_ID=$(bashio::config 'client_id')
 export DEBUG=$(bashio::config 'debug')
 export SELECTED_DEVICES=$(bashio::config 'selected_devices')
 export PYTHONUNBUFFERED=1
+
+export TEST_ENV=os.getenv('fimpport', '1000')
 
 echo "Environment variables:"
 env
