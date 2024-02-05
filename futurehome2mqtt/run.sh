@@ -10,10 +10,11 @@ export DEBUG=$(bashio::config 'debug')
 export SELECTED_DEVICES=$(bashio::config 'selected_devices')
 export PYTHONUNBUFFERED=1
 
-export TEST_ENV=os.getenv('fimpport', '1000')
-
 echo "Environment variables:"
 env
+
+echo "Another one"
+printenv
 
 echo Starting Futurehome FIMP to Home Assistant
 python3 run.py serve

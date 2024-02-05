@@ -1,10 +1,12 @@
-version: '2'
+version: '3.8'
 
 services:
   futurehome2mqtt:
     build: 
       context: .
       dockerfile: Dockerfile-amd64
+
+    env_file: .env
 
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
