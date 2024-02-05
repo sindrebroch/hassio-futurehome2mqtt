@@ -12,6 +12,9 @@ RUN pip3 install --break-system-packages --no-cache-dir --upgrade \
 # Copy data for add-on
 COPY . .
 
+ENV TEST_1
+ENV TEST_2
+
 RUN chmod a+x run.sh
 
 CMD [ "/run.sh" ]

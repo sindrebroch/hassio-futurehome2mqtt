@@ -2,6 +2,10 @@ version: '3.8'
 
 services:
   futurehome2mqtt:
+    
+    container_name: futurehome2mqtt
+    restart: unless-stopped
+
     build: 
       context: .
       dockerfile: Dockerfile-amd64
@@ -10,6 +14,7 @@ services:
 
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
+    
     environment: 
       FIMPSERVER: ${FIMPSERVER}
       FIMPUSERNAME: ${FIMPUSERNAME}
@@ -18,3 +23,4 @@ services:
       CLIENT_ID: ${CLIENT_ID}
       DEBUG: ${DEBUG}
       SELECTED_DEVICES: ${SELECTED_DEVICES}
+      TEST_2: TESTING
