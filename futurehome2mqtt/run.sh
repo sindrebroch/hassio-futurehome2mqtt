@@ -15,8 +15,9 @@ export DEBUG=$(bashio::config 'debug')
 export SELECTED_DEVICES=$(bashio::config 'selected_devices')
 export PYTHONUNBUFFERED=1
 
-echo "Environment variables:"
-env
+if [ "$FIMPSERVER" == "null" ]; then
+    source .env;
+fi
 
 echo Starting Futurehome FIMP to Home Assistant
 python3 run.py serve

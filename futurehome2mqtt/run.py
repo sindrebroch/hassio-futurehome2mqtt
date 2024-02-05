@@ -57,7 +57,6 @@ def serve(client, selected_devices):
 
 if __name__ == "__main__":
     print('Starting service...')
-
     connected = None
     server = os.environ.get('FIMPSERVER')
     username = os.environ.get('FIMPUSERNAME')
@@ -85,7 +84,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) > 1 and sys.argv[1] == "help":
         print(
-            'Usage: \n"python run.py serve" to fetch data form fimp and push components to Home Assistant'
+            'Usage: \n"python run.py serve" to fetch data from fimp and push components to Home Assistant'
         )
 
     elif len(sys.argv) > 1 and sys.argv[1] == "serve":

@@ -1,6 +1,9 @@
 ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/amd64:stable
 FROM ${BUILD_FROM}
 
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ARG FIMPSERVER
 ENV FIMPSERVER=$FIMPSERVER
 ARG FIMPUSERNAME
@@ -16,18 +19,6 @@ ENV DEBUG=$DEBUG
 ARG SELECTED_DEVICES
 ENV SELECTED_DEVICES=$SELECTED_DEVICES
 
-RUN echo "Printing envs"
-RUN echo $FIMPSERVER
-RUN echo $FIMPUSERNAME
-RUN echo $FIMPPORT
-
-ENV TEST_ENV="Testing environment variable"
-
-RUN env
-
-# Set shell
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 RUN apk add --no-cache py3-pip
 RUN pip3 install --break-system-packages --no-cache-dir --upgrade \
     paho-mqtt==1.6.1 \
@@ -37,7 +28,5 @@ RUN pip3 install --break-system-packages --no-cache-dir --upgrade \
 COPY . .
 
 RUN chmod a+x run.sh
-
-RUN env
 
 CMD [ "/run.sh" ]

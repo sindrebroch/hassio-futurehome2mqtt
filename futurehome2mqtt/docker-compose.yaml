@@ -17,10 +17,3 @@ services:
         CLIENT_ID: ${CLIENT_ID:-clientid}
         DEBUG: ${DEBUG:-false}
         SELECTED_DEVICES: ${SELECTED_DEVICES:-""}
-
-    # env_file: .env
-
-    # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
-    # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
-    
-    
