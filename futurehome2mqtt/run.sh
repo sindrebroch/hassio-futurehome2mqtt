@@ -1,6 +1,11 @@
 #!/usr/bin/env bashio
 set -e
 
+echo "Environment variables:"
+env
+
+echo "---"
+
 export FIMPSERVER=$(bashio::config 'fimpserver')
 export FIMPUSERNAME=$(bashio::config 'fimpusername')
 export FIMPPASSWORD=$(bashio::config 'fimppassword')
@@ -12,9 +17,6 @@ export PYTHONUNBUFFERED=1
 
 echo "Environment variables:"
 env
-
-echo "Another one"
-printenv
 
 echo Starting Futurehome FIMP to Home Assistant
 python3 run.py serve
