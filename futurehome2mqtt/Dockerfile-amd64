@@ -38,4 +38,6 @@ COPY . .
 
 RUN chmod a+x run.sh
 
+RUN env
+
 CMD [ "/run.sh" ]
