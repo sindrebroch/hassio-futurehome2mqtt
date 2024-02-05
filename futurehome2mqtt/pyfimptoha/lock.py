@@ -22,7 +22,9 @@ def door_lock(
         "object_id": identifier,
         "unique_id": identifier,
         "command_topic": command_topic,
-        "device": '{ "identifiers": "' + address + '" }',
+        "device": { 
+            "identifiers": address
+        },
         "state_topic": state_topic,
         "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',
         "payload_unlock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":false,"val_t":"bool"}',
