@@ -37,7 +37,7 @@ def blind(
         "object_id": identifier,
         "unique_id": identifier,
         "command_topic": command_topic,
-        "device": '[ "identifiers": "' + address + '" ]',
+        "device": '{ "identifiers": "' + address + '" }',
         "payload_close": payload_close,
         "payload_open": payload_close.replace('"ver":"1"', '"ver":"100"'),
         "set_position_topic": set_position_topic,

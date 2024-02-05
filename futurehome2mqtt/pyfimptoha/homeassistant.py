@@ -141,7 +141,7 @@ def create_components(
                         "name": f"{device['client']['name']}",
                         "object_id": identifier,
                         "unique_id": identifier,
-                        "device": '[ "identifiers": "' + address + '" ]',
+                        "device": '{ "identifiers": "' + address + '" }',
                             # configuration_url
                             # connections
                             # hw_version
