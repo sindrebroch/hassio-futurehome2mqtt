@@ -10,13 +10,13 @@ services:
       context: .
       dockerfile: Dockerfile-amd64
       args: 
-        FIMPSERVER: ${FIMPSERVER}
-        FIMPUSERNAME: ${FIMPUSERNAME}
-        FIMPPASSWORD: ${FIMPPASSWORD}
-        FIMPPORT: 1884
-        CLIENT_ID: ${CLIENT_ID}
-        DEBUG: ${DEBUG}
-        SELECTED_DEVICES: ${SELECTED_DEVICES}
+        - FIMPSERVER=${FIMPSERVER}
+        - FIMPUSERNAME=${FIMPUSERNAME}
+        - FIMPPASSWORD=${FIMPPASSWORD}
+        - FIMPPORT=1884
+        - CLIENT_ID=${CLIENT_ID}
+        - DEBUG=${DEBUG}
+        - SELECTED_DEVICES=${SELECTED_DEVICES}
 
     env_file: .env
 
