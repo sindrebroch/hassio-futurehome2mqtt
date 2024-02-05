@@ -105,6 +105,7 @@ def out_bin_switch(
         "command_topic": command_topic,
         "state_topic": state_topic,
         "schema": "template",
+        "device": '[ "identifiers": "' + address + '" ]',
         "payload_on": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
         "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',
         "command_on_template": """

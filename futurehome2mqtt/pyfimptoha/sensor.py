@@ -23,6 +23,7 @@ def battery(
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
+        "device": '[ "identifiers": "' + address + '" ]',
         "device_class": "battery",
         "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val | round(0) }}"
@@ -66,6 +67,7 @@ def sensor_lumin(
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
+        "device": '[ "identifiers": "' + address + '" ]',
         "device_class": "illuminance",
         "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val | round(0) }}"
@@ -109,6 +111,7 @@ def sensor_presence(
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
+        "device": '[ "identifiers": "' + address + '" ]',
         "device_class": "motion",
         "payload_off": False,
         "payload_on": True,
@@ -151,6 +154,7 @@ def sensor_temp(
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
+        "device": '[ "identifiers": "' + address + '" ]',
         "device_class": "temperature",
         "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val | round(0) }}"
@@ -193,6 +197,7 @@ def meter_elec(
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
+        "device": '[ "identifiers": "' + address + '" ]',
         "device_class": "energy",
         "state_class": "total_increasing",
         "unit_of_measurement": "kWh",
