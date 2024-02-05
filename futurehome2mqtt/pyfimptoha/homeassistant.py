@@ -141,18 +141,17 @@ def create_components(
                         "name": f"{device['client']['name']}",
                         "object_id": identifier,
                         "unique_id": identifier,
-                        "device": [
+                        "device": '[ "identifiers": [ address ] ]',
                             # configuration_url
                             # connections
                             # hw_version
-                            "identifiers": [ address ],#
+                            
                             # manufacturer
                             # model
                             # name
                             # suggested_area
                             # sw_version
                             # via_device
-                        ],
                         "device_class": "outlet",
                         "schema": "template",
                         "command_topic": command_topic,
