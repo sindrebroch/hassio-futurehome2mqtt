@@ -1,5 +1,7 @@
 # Home Assistant add-on: Futurehome FIMP to MQTT
 
+Based on the work of [runelangseid](https://github.com/runelangseid/hassio-futurehome2mqtt)
+
 ## About
 
 This [Futurehome FIMP](https://github.com/futurehomeno/fimp-api) to MQTT add-on allows you to integrate the Futurehome
