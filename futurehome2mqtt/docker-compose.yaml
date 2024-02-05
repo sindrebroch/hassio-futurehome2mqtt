@@ -9,18 +9,18 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile-amd64
+      args: 
+        FIMPSERVER: ${FIMPSERVER}
+        FIMPUSERNAME: ${FIMPUSERNAME}
+        FIMPPASSWORD: ${FIMPPASSWORD}
+        FIMPPORT: 1884
+        CLIENT_ID: ${CLIENT_ID}
+        DEBUG: ${DEBUG}
+        SELECTED_DEVICES: ${SELECTED_DEVICES}
 
     env_file: .env
 
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
     
-    environment: 
-      FIMPSERVER: ${FIMPSERVER}
-      FIMPUSERNAME: ${FIMPUSERNAME}
-      FIMPPASSWORD: ${FIMPPASSWORD}
-      FIMPPORT: 1884
-      CLIENT_ID: ${CLIENT_ID}
-      DEBUG: ${DEBUG}
-      SELECTED_DEVICES: ${SELECTED_DEVICES}
-      TEST_2: TESTING
+    
