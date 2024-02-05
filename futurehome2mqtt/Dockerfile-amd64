@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/armv7:stable
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/amd64:stable
 FROM ${BUILD_FROM}
 
 # Set shell

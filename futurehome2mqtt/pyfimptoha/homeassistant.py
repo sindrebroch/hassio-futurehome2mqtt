@@ -143,7 +143,7 @@ def create_components(
                             # configuration_url
                             # connections
                             # hw_version
-                            "identifiers": [device["fimp"]["address"]],
+                            # "identifiers": [device["fimp"]["address"]],#
                             # manufacturer
                             # model
                             # name

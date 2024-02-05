@@ -2,15 +2,17 @@ version: '2'
 
 services:
   futurehome2mqtt:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile-amd64
 
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/config.json
     # https://github.com/sindrebroch/hassio-futurehome2mqtt/blob/master/futurehome2mqtt/run.py#L62
     environment: 
-      FIMPSERVER: cube.home
-      FIMPUSERNAME: mqttuser
-      FIMPPASSWORD: mqttpassword
-      FIMPPORT: 1884
-      CLIENT_ID: fimp2mqtt
-      DEBUG: false
-      SELECTED_DEVICES: ""
+      FIMPSERVER: ${FIMPSERVER}
+      FIMPUSERNAME: ${FIMPUSERNAME}
+      FIMPPASSWORD: ${FIMPPASSWORD}
+      FIMPPORT: ${FIMPPORT}
+      CLIENT_ID: ${CLIENT_ID}
+      DEBUG: ${DEBUG}
+      SELECTED_DEVICES: ${SELECTED_DEVICES}

@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 import os, sys, time
-import pyfimptoha.client as fimp
+import pyfimptoha.client as client
 
 """
 todo Refactor these functions, move to pyfimotopa/client.py
@@ -40,7 +40,7 @@ def do_connect():
 
 def serve(client, selected_devices):
     global connected
-    f = fimp.Client(
+    f = client.Client(
         mqtt=client,
         selected_devices=selected_devices,
         debug=debug
