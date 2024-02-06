@@ -12,8 +12,8 @@ def blind(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_blind"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
@@ -38,7 +38,10 @@ def blind(
         "unique_id": identifier,
         "command_topic": command_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "payload_close": payload_close,
         "payload_open": payload_close.replace('"ver":"1"', '"ver":"100"'),

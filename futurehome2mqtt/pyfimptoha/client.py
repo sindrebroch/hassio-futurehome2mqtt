@@ -9,7 +9,6 @@ import pyfimptoha.mode as mode
 class Client:
     _devices = [] # discovered fimp devices
     _mqtt = None
-    _selected_devices = None
     _topic_discover = "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:flow1"
     _topic_fimp_event = "pt:j1/mt:evt/rt:dev/rn:zw/ad:1/"
     _topic_ha = "homeassistant/"
@@ -18,10 +17,8 @@ class Client:
     def __init__(
             self,
             mqtt=None,
-            selected_devices=None,
             debug=False
     ):
-        self._selected_devices = selected_devices
         self._verbose = debug
 
         if mqtt:
@@ -58,7 +55,6 @@ class Client:
             homeassistant.create_components(
                 devices=data["val"]["param"]["device"],
                 mqtt=self._mqtt,
-                selected_devices=self._selected_devices,
             )
         elif msg.topic == "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:mode":
             # Create mode sensor  (home, away, sleep and vacation)

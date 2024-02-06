@@ -9,7 +9,6 @@ import pyfimptoha.lock as lock
 
 def create_components(
     devices: list,
-    selected_devices: list,
     mqtt: client,
 ):
     """
@@ -23,18 +22,17 @@ def create_components(
     statuses = []
 
     for device in devices:
+        id = device["id"]
+        things = device["thing"]
         address = device["fimp"]["address"]
         name = device["client"]["name"]
         functionality = device["functionality"]
         room = device["room"]
+        model = device["model"]
+        modelAlias = device["modelAlias"]
 
-        # Skip device without room
-        if device["room"] is None:
-            continue
-
-        # When debugging: Ignore everything except selected_devices if set
-        if selected_devices and address not in selected_devices:
-            print(f"Skipping: {address} {name}")
+        if room is None:
+            print(f"Skipping {name} without a room")
             continue
 
         print(f"Creating: {address} - {name}")
@@ -93,6 +91,13 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
+            elif service_name == "sensor_humid":
+                print(f"- Service: {service_name}")
+                status = sensor.sensor_humid(
+                    device=device,
+                    mqtt=mqtt,
+                    service=service,
+                )
 
             if status:
                 statuses.append(status)
@@ -142,7 +147,10 @@ def create_components(
                         "object_id": identifier,
                         "unique_id": identifier,
                         "device": { 
-                            "identifiers": address
+                            "name": name,
+                            "identifiers": address,
+                            "model": model,
+                            "suggested_area": room
                         },
                         "device_class": "outlet",
                         "schema": "template",

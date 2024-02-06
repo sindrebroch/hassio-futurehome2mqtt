@@ -12,8 +12,8 @@ def battery(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_battery"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -24,7 +24,10 @@ def battery(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "device_class": "battery",
         "unit_of_measurement": unit_of_measurement,
@@ -58,8 +61,8 @@ def sensor_lumin(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_illuminance"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -70,7 +73,10 @@ def sensor_lumin(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "device_class": "illuminance",
         "unit_of_measurement": unit_of_measurement,
@@ -105,8 +111,8 @@ def sensor_presence(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_sensor_presence"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -116,7 +122,10 @@ def sensor_presence(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "device_class": "motion",
         "payload_off": False,
@@ -149,8 +158,8 @@ def sensor_temp(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_temperature"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -161,7 +170,10 @@ def sensor_temp(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model, # modelAlias
+            "suggested_area": room
         },
         "device_class": "temperature",
         "unit_of_measurement": unit_of_measurement,
@@ -187,6 +199,54 @@ def sensor_temp(
         status = (state_topic, payload)
     return status
 
+def sensor_humid(
+        device: typing.Any,
+        mqtt,
+        service,
+):
+    address = device["fimp"]["address"]
+    name = device["client"]["name"]
+    room = device["room"]
+    model = device["model"]
+
+    identifier = f"fh_{address}_humidity"
+    state_topic = f"pt:j1/mt:evt{service['addr']}"
+    unit_of_measurement = "%"
+    component = {
+        "name": f"{name} (humidity)",
+        "object_id": identifier,
+        "unique_id": identifier,
+        "state_topic": state_topic,
+        "device": { 
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
+        },
+        "device_class": "humidity",
+        "unit_of_measurement": unit_of_measurement,
+        "value_template": "{{ value_json.val | round(0) }}"
+    }
+    payload = json.dumps(component)
+    mqtt.publish(f"homeassistant/sensor/{identifier}/config", payload)
+
+    # Queue statuses
+    status = None
+    if device.get("param") and device['param'].get('humidity'):
+        value = device['param']['humidity']
+        data = {
+            "props": {
+                "unit": unit_of_measurement
+            },
+            "serv": "sensor_humid",
+            "type": "evt.sensor.report",
+            "val": value,
+            "val_t": "float",
+        }
+        payload = json.dumps(data)
+        status = (state_topic, payload)
+    return status
+
 
 def meter_elec(
         device: typing.Any,
@@ -195,8 +255,8 @@ def meter_elec(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_meter_elec"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -206,7 +266,10 @@ def meter_elec(
         "unique_id": identifier,
         "state_topic": state_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "device_class": "energy",
         "state_class": "total_increasing", # TODO

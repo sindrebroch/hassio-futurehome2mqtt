@@ -13,6 +13,8 @@ def door_lock(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
+    room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_door_lock"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
@@ -23,7 +25,10 @@ def door_lock(
         "unique_id": identifier,
         "command_topic": command_topic,
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "state_topic": state_topic,
         "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',

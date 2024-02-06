@@ -14,8 +14,8 @@ def out_lvl_switch(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_{service_name}"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
@@ -27,6 +27,12 @@ def out_lvl_switch(
         "brightness_scale": 100,
         "command_topic": command_topic,
         "state_topic": state_topic,
+        "device": { 
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
+        },
         "command_on_template": """
                 {
                   "props":{},
@@ -92,8 +98,8 @@ def out_bin_switch(
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
-    # todo add room
     room = device["room"]
+    model = device["model"]
 
     identifier = f"fh_{address}_{service_name}"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
@@ -106,7 +112,10 @@ def out_bin_switch(
         "state_topic": state_topic,
         "schema": "template",
         "device": { 
-            "identifiers": address
+            "name": name,
+            "identifiers": address,
+            "model": model,
+            "suggested_area": room
         },
         "payload_on": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
         "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',

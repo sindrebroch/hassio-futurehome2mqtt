@@ -36,6 +36,10 @@ def create(mqtt, data):
     component = {
         "icon": "mdi:hexagon",
         "name": f"{name}",
+        "device": {
+            "identifiers": "fh_mode",
+            "name": name
+        },
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
