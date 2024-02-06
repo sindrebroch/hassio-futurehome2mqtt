@@ -28,7 +28,6 @@ def create(mqtt, data):
 
     _mode = data.get("val").get("param").get("house").get("mode")
 
-    name = "Modus"
     value_template = \
         "{% if value_json.val.id == 'mode' %}{{ value_json.val.param.current }}" \
         "{% else %}{{states('sensor.fh_mode')}}{% endif %}"
@@ -37,9 +36,9 @@ def create(mqtt, data):
     state_topic = "pt:j1/mt:evt/rt:app/rn:vinculum/ad:1"
     component = {
         "icon": "mdi:hexagon",
-        "name": name,
+        "name": "Modus",
         "device": {
-            "name": name,
+            "name": "Futurehome",
             "identifiers": identifier,
         },
         "object_id": identifier,
