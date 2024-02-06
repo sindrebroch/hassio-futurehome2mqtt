@@ -1,0 +1,194 @@
+{
+    "client": {
+        "name": "Lys stue gang"
+    },
+    "fimp": {
+        "adapter": "zwave-ad",
+        "address": "27",
+        "group": "ch_1"
+    },
+    "functionality": "lighting",
+    "id": 67,
+    "lrn": True,
+    "model": "zw_271_258_4096",
+    "param": {
+        "alarms": {},
+        "dimValue": 100,
+        "energy": 1.79999995231628,
+        "power": "off",
+        "supportedAlarms": {
+            "heat": [
+                "overheat"
+            ],
+            "power": [
+                "surge",
+                "voltage_drop",
+                "over_current",
+                "load_error"
+            ],
+            "system": [
+                "hw_failure"
+            ]
+        },
+        "timestamp": "2024-02-06 00:42:33 +0100",
+        "wattage": 0.0
+    },
+    "problem": False,
+    "room": 8,
+    "services": {
+        "alarm_heat": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:alarm_heat/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.alarm.get_report",
+                "evt.alarm.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_events": [
+                    "overheat"
+                ]
+            }
+        },
+        "alarm_power": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:alarm_power/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.alarm.get_report",
+                "evt.alarm.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_events": [
+                    "surge",
+                    "voltage_drop",
+                    "over_current",
+                    "load_error"
+                ]
+            }
+        },
+        "alarm_system": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:alarm_system/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.alarm.get_report",
+                "evt.alarm.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_events": [
+                    "hw_failure"
+                ]
+            }
+        },
+        "basic": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:basic/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.lvl.get_report",
+                "cmd.lvl.set",
+                "evt.lvl.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        },
+        "dev_sys": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:dev_sys/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.group.add_members",
+                "cmd.group.delete_members",
+                "cmd.group.get_members",
+                "evt.group.members_report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        },
+        "meter_elec": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:meter_elec/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.meter.get_report",
+                "cmd.meter.reset",
+                "evt.meter.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_units": [
+                    "kWh",
+                    "W"
+                ]
+            }
+        },
+        "out_lvl_switch": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:out_lvl_switch/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.binary.set",
+                "cmd.lvl.get_report",
+                "cmd.lvl.set",
+                "cmd.lvl.start",
+                "cmd.lvl.stop",
+                "evt.binary.report",
+                "evt.lvl.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "max_lvl": 100,
+                "min_lvl": 0
+            }
+        },
+        "sensor_power": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:sensor_power/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.sensor.get_report",
+                "evt.sensor.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_units": [
+                    "W"
+                ]
+            }
+        },
+        "version": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:version/ad:27_1",
+            "enabled": True,
+            "intf": [
+                "cmd.version.get_report",
+                "evt.version.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        }
+    },
+    "supports": [
+        "clear",
+        "poll"
+    ],
+    "thing": 20,
+    "type": {
+        "subtype": None,
+        "supported": {
+            "appliance": [],
+            "blinds": [],
+            "fan": [],
+            "heater": [],
+            "light": []
+        },
+        "type": "light"
+    }
+}

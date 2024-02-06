@@ -1,0 +1,159 @@
+{
+    "client": {
+        "name": "Screen"
+    },
+    "fimp": {
+        "adapter": "zwave-ad",
+        "address": "67",
+        "group": "ch_0"
+    },
+    "functionality": None,
+    "id": 130,
+    "lrn": True,
+    "model": "zw_271_771_4096",
+    "param": {
+        "energy": 0.109999999403954,
+        "moveState": None,
+        "position": 100,
+        "shutterState": "open",
+        "target": None,
+        "timestamp": "2024-02-01 23:50:39 +0100",
+        "wattage": None,
+        "zwaveConfigParameters": [
+            {
+                "parameter": 150,
+                "size": 1,
+                "value": 1
+            },
+            {
+                "parameter": 151,
+                "size": 1,
+                "value": 1
+            },
+            {
+                "parameter": 156,
+                "size": 4,
+                "value": 2498
+            },
+            {
+                "parameter": 157,
+                "size": 4,
+                "value": 2383
+            }
+        ]
+    },
+    "problem": False,
+    "room": 8,
+    "services": {
+        "basic": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:basic/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.lvl.get_report",
+                "cmd.lvl.set",
+                "evt.lvl.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        },
+        "dev_sys": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:dev_sys/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.config.get_report",
+                "cmd.config.set",
+                "cmd.group.add_members",
+                "cmd.group.delete_members",
+                "cmd.group.get_members",
+                "cmd.ping.send",
+                "evt.config.report",
+                "evt.group.members_report",
+                "evt.ping.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        },
+        "meter_elec": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:meter_elec/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.meter.get_report",
+                "cmd.meter.reset",
+                "evt.meter.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_units": [
+                    "kWh",
+                    "W"
+                ]
+            }
+        },
+        "out_lvl_switch": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:out_lvl_switch/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.binary.set",
+                "cmd.lvl.get_report",
+                "cmd.lvl.set",
+                "cmd.lvl.start",
+                "cmd.lvl.stop",
+                "evt.binary.report",
+                "evt.lvl.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "max_lvl": 100,
+                "min_lvl": 0
+            }
+        },
+        "scene_ctrl": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:scene_ctrl/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.scene.get_report",
+                "cmd.scene.set",
+                "evt.scene.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True,
+                "sup_scenes": None
+            }
+        },
+        "version": {
+            "addr": "/rt:dev/rn:zw/ad:1/sv:version/ad:67_0",
+            "enabled": True,
+            "intf": [
+                "cmd.version.get_report",
+                "evt.version.report"
+            ],
+            "props": {
+                "is_secure": False,
+                "is_unsecure": True
+            }
+        }
+    },
+    "supports": [
+        "clear",
+        "poll"
+    ],
+    "thing": 67,
+    "type": {
+        "subtype": None,
+        "supported": {
+            "appliance": [],
+            "blinds": [],
+            "fan": [],
+            "heater": [],
+            "light": []
+        },
+        "type": "blinds"
+    }
+}
