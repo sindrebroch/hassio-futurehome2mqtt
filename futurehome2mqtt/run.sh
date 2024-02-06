@@ -1,11 +1,6 @@
 #!/usr/bin/env bashio
 set -e
 
-echo "Environment variables:"
-env
-
-echo "---"
-
 export FIMPSERVER=$(bashio::config 'fimpserver')
 export FIMPUSERNAME=$(bashio::config 'fimpusername')
 export FIMPPASSWORD=$(bashio::config 'fimppassword')
