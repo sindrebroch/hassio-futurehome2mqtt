@@ -38,11 +38,10 @@ def do_connect():
     return client
 
 
-def serve(client, selected_devices):
+def serve(client):
     global connected
     f = fimp.Client(
         mqtt=client,
-        selected_devices=selected_devices,
         debug=debug
     )
 
@@ -64,11 +63,6 @@ if __name__ == "__main__":
     port = int(os.environ.get('FIMPPORT'))
     client_id = os.environ.get('CLIENT_ID')
     debug = os.environ.get('DEBUG')
-    selected_devices = []
-
-    _selected_devices = os.environ.get('SELECTED_DEVICES')
-    if _selected_devices:
-        selected_devices = _selected_devices.split(',')
 
     if debug.lower() == 'true':
         debug = True
@@ -80,7 +74,6 @@ if __name__ == "__main__":
     print('Port: ', port)
     print('Client id: ', client_id)
     print('Debug : ', debug)
-    print('Selected devices', selected_devices)
 
     if len(sys.argv) > 1 and sys.argv[1] == "help":
         print(
@@ -93,4 +86,4 @@ if __name__ == "__main__":
         time.sleep(2)
 
         if connected:
-            serve(client, selected_devices)
+            serve(client)

@@ -14,8 +14,7 @@
         "fimppassword": "mqttpassword",
         "fimpport": 1884,
         "client_id": "fimp2mqtt",
-        "debug": false,
-        "selected_devices": ""
+        "debug": false
       },
       "schema": {
         "fimpserver": "str",
@@ -23,7 +22,6 @@
         "fimppassword": "str",
         "fimpport": "int",
         "client_id": "str",
-        "debug": "bool",
-        "selected_devices": "str"
+        "debug": "bool"
       }
 }

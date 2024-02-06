@@ -9,11 +9,3 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile-amd64
-      args: 
-        FIMPSERVER: ${FIMPSERVER:-fimpserver}
-        FIMPUSERNAME: ${FIMPUSERNAME:-fimpusername}
-        FIMPPASSWORD: ${FIMPPASSWORD}
-        FIMPPORT: 1884
-        CLIENT_ID: ${CLIENT_ID:-clientid}
-        DEBUG: ${DEBUG:-false}
-        SELECTED_DEVICES: ${SELECTED_DEVICES:-""}
