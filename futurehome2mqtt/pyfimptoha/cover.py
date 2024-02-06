@@ -4,6 +4,7 @@ Creates covers in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimotopa.utils as utils
 
 def blind(
         device: typing.Any,
@@ -13,7 +14,7 @@ def blind(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_blind"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"

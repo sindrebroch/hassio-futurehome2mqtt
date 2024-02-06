@@ -5,6 +5,7 @@ Creates lock in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimotopa.utils as utils
 
 def door_lock(
         device: typing.Any,
@@ -14,7 +15,7 @@ def door_lock(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_door_lock"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"

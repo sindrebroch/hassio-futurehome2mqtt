@@ -5,6 +5,7 @@ Creates light in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimotopa.utils as utils
 
 def out_lvl_switch(
         service_name: str,
@@ -15,7 +16,7 @@ def out_lvl_switch(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_{service_name}"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
@@ -99,7 +100,7 @@ def out_bin_switch(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_{service_name}"
     command_topic = f"pt:j1/mt:cmd{service['addr']}"

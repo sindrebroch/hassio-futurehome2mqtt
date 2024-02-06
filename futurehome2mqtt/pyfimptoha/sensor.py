@@ -4,7 +4,7 @@ Creates sensors in Home Assistant based on FIMP services
 import json
 import typing
 
-from .utils import Utils
+import pyfimotopa.utils as utils
 
 def battery(
         device: typing.Any,
@@ -14,7 +14,7 @@ def battery(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_battery"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -63,7 +63,7 @@ def sensor_lumin(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_illuminance"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -113,7 +113,7 @@ def sensor_presence(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_sensor_presence"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -160,7 +160,7 @@ def sensor_temp(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = Utils.get_model(device)
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_temperature"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -208,7 +208,7 @@ def sensor_humid(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     identifier = f"fh_{address}_humidity"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
@@ -257,7 +257,7 @@ def meter_elec(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = utils.get_model(device)
 
     is_energy = device.get("param") and device['param'].get('energy')
     is_wattage = device.get("param") and device['param'].get('wattage')
