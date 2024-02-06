@@ -17,7 +17,6 @@ def create_components(
     """
 
     print('Received list of devices from FIMP. FIMP reported %s devices' % (len(devices)))
-    print('Devices without rooms are ignored')
 
     statuses = []
 
@@ -34,9 +33,6 @@ def create_components(
         except KeyError:
             model = device["model"]
 
-        if room is None:
-            print(f"Skipping {name} without a room")
-
         print(f"Creating: {address} - {name}")
         print(f"- IDs: {id} - {thing} - {address}")
         print(f"- Device: {device}")
@@ -45,8 +41,6 @@ def create_components(
         print(f"- Functionality: {functionality}")
 
         for service_name, service in device["services"].items():
-            # Adding sensors
-            # todo add more sensors: alarm_power?, sensor_power. see old sensor.py
             status = None
 
             try:
@@ -69,6 +63,7 @@ def create_components(
                     service=service,
                 )
             elif service_name == "meter_elec":
+                print(f"- Service: {service_name}")
                 status = sensor.meter_elec(
                     device=device,
                     mqtt=mqtt,
@@ -107,7 +102,7 @@ def create_components(
                 statuses.append(status)
 
             # Door lock
-            elif service_name == "door_lock":
+            elif _type == "door_lock":
                 print(f"- Service: {service_name}")
                 status = lock.door_lock(
                     device=device,
@@ -121,7 +116,7 @@ def create_components(
             elif functionality == "lighting":
                 status = None
                 if service_name == "out_lvl_switch":
-                    print(f"- Service: {service_name}")
+                    print(f"- Service: {functionality} - {service_name}")
                     status = light.out_lvl_switch(
                         service_name=service_name,
                         device=device,
@@ -129,6 +124,7 @@ def create_components(
                         service=service,
                     )
                 elif service_name == "out_bin_switch":
+                    print(f"- Service: {functionality} - {service_name}")
                     status = light.out_bin_switch(
                         service_name=service_name,
                         device=device,
@@ -143,6 +139,7 @@ def create_components(
             elif functionality == "appliance":
                 # Binary switch
                 if service_name == "out_bin_switch":
+                    print(f"- Service: {functionality} - {service_name}")
                     identifier = f"fh_{address}_{service_name}"
                     command_topic = f"pt:j1/mt:cmd{service['addr']}"
                     state_topic   = f"pt:j1/mt:evt{service['addr']}"
