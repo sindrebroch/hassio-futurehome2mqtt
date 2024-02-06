@@ -29,7 +29,7 @@ def create_components(
         functionality = device["functionality"]
         room = device["room"]
         model = device["model"]
-        modelAlias = device["modelAlias"]
+        #modelAlias = device["modelAlias"]
 
         if room is None:
             print(f"Skipping {name} without a room")
