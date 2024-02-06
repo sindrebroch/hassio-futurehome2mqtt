@@ -4,7 +4,7 @@ Creates sensors in Home Assistant based on FIMP services
 import json
 import typing
 
-import pyfimotopa.utils as utils
+import pyfimptoha.utils as utils
 
 def battery(
         device: typing.Any,

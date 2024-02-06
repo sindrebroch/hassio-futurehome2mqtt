@@ -5,7 +5,7 @@ Creates light in Home Assistant based on FIMP services
 import json
 import typing
 
-import pyfimotopa.utils as utils
+import pyfimptoha.utils as utils
 
 def out_lvl_switch(
         service_name: str,

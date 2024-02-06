@@ -3,7 +3,7 @@ import os, sys, time
 import pyfimptoha.client as fimp
 
 """
-todo Refactor these functions, move to pyfimotopa/client.py
+todo Refactor these functions, move to pyfimptoha/client.py
 """
 
 

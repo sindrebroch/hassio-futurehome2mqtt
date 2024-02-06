@@ -4,7 +4,7 @@ Creates covers in Home Assistant based on FIMP services
 import json
 import typing
 
-import pyfimotopa.utils as utils
+import pyfimptoha.utils as utils
 
 def blind(
         device: typing.Any,

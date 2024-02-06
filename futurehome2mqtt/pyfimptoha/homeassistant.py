@@ -5,7 +5,7 @@ import pyfimptoha.cover as cover
 import pyfimptoha.sensor as sensor
 import pyfimptoha.light as light
 import pyfimptoha.lock as lock
-import pyfimotopa.utils as utils
+import pyfimptoha.utils as utils
 
 def create_components(
     devices: list,
