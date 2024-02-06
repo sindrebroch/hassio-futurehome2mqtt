@@ -20,7 +20,7 @@ def door_lock(
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
     state_topic   = f"pt:j1/mt:evt{service['addr']}"
     component = {
-        "name": f"{device['client']['name']}",
+        "name": "Dørlås",
         "object_id": identifier,
         "unique_id": identifier,
         "command_topic": command_topic,

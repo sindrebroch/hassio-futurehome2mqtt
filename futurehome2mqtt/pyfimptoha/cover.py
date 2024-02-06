@@ -33,7 +33,7 @@ def blind(
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     set_position_topic = f"pt:j1/mt:cmd{service['addr']}"
     component = {
-        "name": f"{name} (persienne)",
+        "name": "Persienne",
         "object_id": identifier,
         "unique_id": identifier,
         "command_topic": command_topic,

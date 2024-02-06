@@ -21,7 +21,7 @@ def out_lvl_switch(
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
     state_topic   = f"pt:j1/mt:evt{service['addr']}"
     component = {
-        "name": f"{name}",
+        "name": "Lys",
         "object_id": identifier,
         "unique_id": identifier,
         "brightness_scale": 100,
@@ -105,7 +105,7 @@ def out_bin_switch(
     command_topic = f"pt:j1/mt:cmd{service['addr']}"
     state_topic   = f"pt:j1/mt:evt{service['addr']}"
     component = {
-        "name": f"{name}",
+        "name": "Switch",
         "object_id": identifier,
         "unique_id": identifier,
         "command_topic": command_topic,

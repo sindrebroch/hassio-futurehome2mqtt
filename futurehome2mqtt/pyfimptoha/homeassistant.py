@@ -35,10 +35,10 @@ def create_components(
 
         print(f"Creating: {address} - {name}")
         print(f"- IDs: {id} - {thing} - {address}")
-        print(f"- Device: {device}")
         print(f"- Room: {room}")
         print(f"- Model: {model}")
         print(f"- Functionality: {functionality}")
+        print(f"- Device: {device}")
 
         for service_name, service in device["services"].items():
             status = None
@@ -144,7 +144,7 @@ def create_components(
                     command_topic = f"pt:j1/mt:cmd{service['addr']}"
                     state_topic   = f"pt:j1/mt:evt{service['addr']}"
                     component = {
-                        "name": f"{device['client']['name']}",
+                        "name": "Switch",
                         "object_id": identifier,
                         "unique_id": identifier,
                         "device": { 

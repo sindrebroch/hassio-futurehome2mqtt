@@ -20,7 +20,7 @@ def battery(
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     unit_of_measurement = "%"
     component = {
-        "name": f"{name} (batteri)",
+        "name": "Batteri",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -69,7 +69,7 @@ def sensor_lumin(
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     unit_of_measurement = "lx"
     component = {
-        "name": f"{name} (belysningsstyrke)",
+        "name": "Belysningsstyrke",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -118,7 +118,7 @@ def sensor_presence(
     identifier = f"fh_{address}_sensor_presence"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     component = {
-        "name": f"{name} (bevegelse)",
+        "name": "Bevegelse",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -166,7 +166,7 @@ def sensor_temp(
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     unit_of_measurement = "°C"
     component = {
-        "name": f"{name} (temperatur)",
+        "name": "Temperatur",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -214,7 +214,7 @@ def sensor_humid(
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     unit_of_measurement = "%"
     component = {
-        "name": f"{name} (humidity)",
+        "name": "Luftfuktighet",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -262,13 +262,14 @@ def meter_elec(
     is_energy = device.get("param") and device['param'].get('energy')
     is_wattage = device.get("param") and device['param'].get('wattage')
 
+    device_class = "energy" if is_energy else "power"
     state_class = "total_increasing" if is_energy else "measurement"
     unit_of_measurement = "kWh" if is_energy else "W"
 
     identifier = f"fh_{address}_meter_elec"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     component = {
-        "name": f"{name} (forbruk)",
+        "name": "Forbruk",
         "object_id": identifier,
         "unique_id": identifier,
         "state_topic": state_topic,
@@ -278,7 +279,7 @@ def meter_elec(
             "model": model,
             "suggested_area": room
         },
-        "device_class": "energy",
+        "device_class": device_class,
         "state_class": state_class,
         "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val }}"
