@@ -23,7 +23,7 @@ def create_components(
 
     for device in devices:
         id = device["id"]
-        things = device["thing"]
+        thing = device["thing"]
         address = device["fimp"]["address"]
         name = device["client"]["name"]
         functionality = device["functionality"]
@@ -33,9 +33,9 @@ def create_components(
 
         if room is None:
             print(f"Skipping {name} without a room")
-            continue
 
         print(f"Creating: {address} - {name}")
+        print(f"- IDs: {id} - {thing} - {address}")
         print(f"- Device: {device}")
         print(f"- Room: {room}")
         print(f"- Functionality: {functionality}")
