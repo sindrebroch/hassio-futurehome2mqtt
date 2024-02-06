@@ -28,8 +28,11 @@ def create_components(
         name = device["client"]["name"]
         functionality = device["functionality"]
         room = device["room"]
-        model = device["model"]
-        #modelAlias = device["modelAlias"]
+
+        try:
+            model = device["modelAlias"]
+        except KeyError:
+            model = device["model"]
 
         if room is None:
             print(f"Skipping {name} without a room")
@@ -38,6 +41,7 @@ def create_components(
         print(f"- IDs: {id} - {thing} - {address}")
         print(f"- Device: {device}")
         print(f"- Room: {room}")
+        print(f"- Model: {model}")
         print(f"- Functionality: {functionality}")
 
         for service_name, service in device["services"].items():
