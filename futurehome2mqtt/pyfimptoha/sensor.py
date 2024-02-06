@@ -172,7 +172,7 @@ def sensor_temp(
         "device": { 
             "name": name,
             "identifiers": address,
-            "model": model, # modelAlias
+            "model": model,
             "suggested_area": room
         },
         "device_class": "temperature",
@@ -258,6 +258,12 @@ def meter_elec(
     room = device["room"]
     model = device["model"]
 
+    is_energy = device.get("param") and device['param'].get('energy')
+    is_wattage = device.get("param") and device['param'].get('wattage')
+
+    state_class = "total_increasing" if is_energy else "measurement"
+    unit_of_measurement = "kWh" if is_energy else "W"
+
     identifier = f"fh_{address}_meter_elec"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
     component = {
@@ -272,8 +278,8 @@ def meter_elec(
             "suggested_area": room
         },
         "device_class": "energy",
-        "state_class": "total_increasing", # TODO
-        "unit_of_measurement": "kWh",
+        "state_class": state_class,
+        "unit_of_measurement": unit_of_measurement,
         "value_template": "{{ value_json.val }}"
     }
     payload = json.dumps(component)
@@ -281,7 +287,7 @@ def meter_elec(
 
     # Queue statuses
     status = None
-    if device.get("param") and device['param'].get('energy'):
+    if is_energy:
         value = device['param']['energy']
         data = {
             "props": {
@@ -291,7 +297,19 @@ def meter_elec(
             "type": "evt.meter.report",
             "val": value,
         }
-
         payload = json.dumps(data)
         status = (state_topic, payload)
+    elif is_wattage:
+        value = device['param']['wattage']
+        data = {
+            "props": {
+                "unit": "W"
+            },
+            "serv": "meter_elec",
+            "type": "evt.meter.report",
+            "val": value,
+        }
+        payload = json.dumps(data)
+        status = (state_topic, payload)
+
     return status
