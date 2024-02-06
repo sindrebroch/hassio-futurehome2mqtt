@@ -28,7 +28,7 @@ def door_lock(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "state_topic": state_topic,
         "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',

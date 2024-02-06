@@ -31,7 +31,7 @@ def out_lvl_switch(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "command_on_template": """
                 {
@@ -115,7 +115,7 @@ def out_bin_switch(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "payload_on": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
         "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',

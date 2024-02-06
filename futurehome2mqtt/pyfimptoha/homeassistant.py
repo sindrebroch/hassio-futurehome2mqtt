@@ -151,7 +151,7 @@ def create_components(
                             "name": name,
                             "identifiers": address,
                             "model": model,
-                            "suggested_area": room
+                            "suggested_area": room if room is not None else "Unknown"
                         },
                         "device_class": "outlet",
                         "schema": "template",

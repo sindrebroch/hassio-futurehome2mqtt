@@ -28,7 +28,7 @@ def battery(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": "battery",
         "unit_of_measurement": unit_of_measurement,
@@ -77,7 +77,7 @@ def sensor_lumin(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": "illuminance",
         "unit_of_measurement": unit_of_measurement,
@@ -126,7 +126,7 @@ def sensor_presence(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": "motion",
         "payload_off": False,
@@ -174,7 +174,7 @@ def sensor_temp(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": "temperature",
         "unit_of_measurement": unit_of_measurement,
@@ -222,7 +222,7 @@ def sensor_humid(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": "humidity",
         "unit_of_measurement": unit_of_measurement,
@@ -277,7 +277,7 @@ def meter_elec(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "device_class": device_class,
         "state_class": state_class,

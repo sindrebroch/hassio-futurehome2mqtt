@@ -41,7 +41,7 @@ def blind(
             "name": name,
             "identifiers": address,
             "model": model,
-            "suggested_area": room
+            "suggested_area": room if room is not None else "Unknown"
         },
         "payload_close": payload_close,
         "payload_open": payload_close.replace('"ver":"1"', '"ver":"100"'),
