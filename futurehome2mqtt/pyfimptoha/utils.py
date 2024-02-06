@@ -1,9 +1,11 @@
+"""
+Utils for FIMP services
+"""
 
-class Utils:
+import typing
 
-    @staticmethod
-    def get_model(device):
-        try:
-            return device["modelAlias"]
-        except KeyError:
-            return device["model"]
+def get_model(device: typing.Any):
+    try:
+        return device["modelAlias"]
+    except KeyError:
+        return device["model"]
