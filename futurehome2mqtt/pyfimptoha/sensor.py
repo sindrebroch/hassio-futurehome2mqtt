@@ -159,7 +159,7 @@ def sensor_temp(
     address = device["fimp"]["address"]
     name = device["client"]["name"]
     room = device["room"]
-    model = device["model"]
+    model = Utils.get_model(device)
 
     identifier = f"fh_{address}_temperature"
     state_topic = f"pt:j1/mt:evt{service['addr']}"
