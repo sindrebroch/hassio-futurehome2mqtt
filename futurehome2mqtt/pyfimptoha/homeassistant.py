@@ -58,7 +58,7 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-            elif service_name == "meter_elec":
+            elif service_name == "meter_elec": # wattage vs energy
                 print(f"- Service: {service_name}")
                 status = sensor.meter_elec(
                     device=device,

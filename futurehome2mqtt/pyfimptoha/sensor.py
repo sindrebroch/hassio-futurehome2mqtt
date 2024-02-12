@@ -293,7 +293,7 @@ def meter_elec(
         value = device['param']['energy']
         data = {
             "props": {
-                "unit": "kWh"
+                "unit": unit_of_measurement
             },
             "serv": "meter_elec",
             "type": "evt.meter.report",
@@ -305,7 +305,7 @@ def meter_elec(
         value = device['param']['wattage']
         data = {
             "props": {
-                "unit": "W"
+                "unit": unit_of_measurement
             },
             "serv": "meter_elec",
             "type": "evt.meter.report",
