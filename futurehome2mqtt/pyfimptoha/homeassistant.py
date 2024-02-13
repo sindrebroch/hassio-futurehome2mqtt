@@ -170,6 +170,7 @@ def create_components(
                     status = switch.appliance_switch(
                         device=device,
                         mqtt=mqtt,
+                        service_name=service_name,
                         service=service,
                     )
                 pass
