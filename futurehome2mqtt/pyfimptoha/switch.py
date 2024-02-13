@@ -10,6 +10,7 @@ import pyfimptoha.utils as utils
 def appliance_switch(
     device: typing.Any,
     mqtt,
+    service_name,
     service,
 ):
     address = device["fimp"]["address"]
