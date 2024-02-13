@@ -22,6 +22,7 @@ class CustomEntity():
     mqtt: typing.Any
 
     entity_type: str
+    entity_identifier: str
 
     address: str
     name: str
@@ -29,20 +30,35 @@ class CustomEntity():
     model: str
     identifier: str
     state_topic: str
+    component_name: str
 
     def __init__(self, mqtt, device):
-        print("Init Entity")
         self.mqtt = mqtt
         self.address = device["fimp"]["address"]
         self.name = device["client"]["name"]
-        self.room = device["room"]
+        self.room = utils.get_room(device)
         self.model = utils.get_model(device)
+        self.identifier =  f"fh_{self.address}_{self.entity_identifier}"
 
     def publish(self):
-        print("Publish Entity", self.entity_type, self.identifier)
-        topic = f"homeassistant/{self.entity_type}/{self.identifier}/config"
-        # payload = json.dumps(component)
-        # mqtt.publish(topic, payload)
+        mqtt.publish(
+            f"homeassistant/{self.entity_type}/{self.identifier}/config", 
+            json.dumps(self.component())
+        )
+
+    def component(self):
+        return {
+            "name": self.component_name,
+            "object_id": self.identifier,
+            "unique_id": self.identifier,
+            "state_topic": self.state_topic,
+            "device": { 
+                "name": self.name,
+                "identifiers": self.address,
+                "model": self.model,
+                "suggested_area": self.room
+            }
+        }
 
     def status(self):
         print("Status Entity")

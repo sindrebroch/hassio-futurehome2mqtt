@@ -11,8 +11,8 @@ import pyfimptoha.utils as utils
 class BinarySensor(entity.CustomEntity):
 
     def __init__(self, mqtt, device):
-        self.entity_type = "binary_sensor"
         super().__init__(mqtt, device)
+        self.entity_type = "binary_sensor"
 
 class BinarySensorPresence(BinarySensor):
 
@@ -23,13 +23,37 @@ class BinarySensorPresence(BinarySensor):
         service
     ):
         print("Init BinarySensorPresence")
-        super().__init__(mqtt, device)
-        self.identifier =  f"fh_{self.address}_sensor_presence"
+        self.component_name = "Motion"
+        self.entity_identifier =  "sensor_presence"
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"
+        super().__init__(mqtt, device)
+
+    def component(self):
+        return super().component().update({
+            "device_class": "motion",
+            "payload_off": False,
+            "payload_on": True,
+            "value_template": "{{ value_json.val }}",
+        })
 
     def publish(self):
         print("Publish BinarySensorPresence")
         super().publish()
+
+    def status(self):
+        value = False
+        if device.get("param") and device['param'].get('presence'):
+            value = device['param']['presence']
+        data = {
+            "props": {},
+            "serv": "sensor_presence",
+            "type": "evt.presence.report",
+            "val_t": "bool",
+            "val": value
+        }
+        payload = json.dumps(data)
+        status = (state_topic, payload)
+        return status
 
 def sensor_presence(
     device: typing.Any,
