@@ -77,7 +77,7 @@ def create_components(
                 )
             elif service_name == "sensor_presence":
                 print(f"- Service: {service_name}")
-                testStatus = BinarySensor(mqtt, device, service)
+                testStatus = binary_sensor.BinarySensor(mqtt, device, service)
                 print("testStatus", testStatus)
                 status = binary_sensor.sensor_presence(
                     device=device,
