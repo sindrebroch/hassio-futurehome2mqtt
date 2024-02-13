@@ -26,8 +26,6 @@ class BinarySensorPresence(BinarySensor):
         super().__init__(mqtt, device)
         self.identifier =  f"fh_{self.address}_sensor_presence"
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"
-        self.publish()
-        return self.status()
 
     def publish(self):
         print("Publish BinarySensorPresence")
