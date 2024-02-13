@@ -6,6 +6,30 @@ import typing
 
 import pyfimptoha.utils as utils
 
+from pyfimptoha.entity import Entity
+
+class BinarySensor(Entity):
+    
+    entity_type = "binary_sensor"
+
+class BinarySensorPresence(BinarySensor):
+
+    def __init__(
+        self, 
+        mqtt, 
+        device, 
+        service
+    ):
+        print("Init BinarySensorPresence")
+        super().__init__(mqtt, device)
+        self.identifier =  f"fh_{self.address}_sensor_presence"
+        self.state_topic = f"pt:j1/mt:evt{service['addr']}"
+        self.publish()
+        return self.status()
+
+    def publish(self):
+        print("Publish BinarySensorPresence")
+        super().publish()
 
 def sensor_presence(
     device: typing.Any,
