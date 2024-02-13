@@ -17,7 +17,7 @@ class Component():
     device: Device
     device_class: str
 
-class Entity():
+class CustomEntity():
 
     mqtt: typing.Any
 
@@ -39,8 +39,8 @@ class Entity():
         self.model = utils.get_model(device)
 
     def publish(self):
-        print("Publish Entity", entity_type, identifier)
-        topic = f"homeassistant/{entity_type}/{identifier}/config"
+        print("Publish Entity", self.entity_type, self.identifier)
+        topic = f"homeassistant/{self.entity_type}/{self.identifier}/config"
         # payload = json.dumps(component)
         # mqtt.publish(topic, payload)
 

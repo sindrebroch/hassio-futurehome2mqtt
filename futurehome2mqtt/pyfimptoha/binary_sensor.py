@@ -4,13 +4,13 @@ Creates binary_sensors in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
-from pyfimptoha.entity import Entity
 
-class BinarySensor(Entity):
-    
-    entity_type = "binary_sensor"
+class BinarySensor(entity.CustomEntity):
+
+    self.entity_type = "binary_sensor"
 
 class BinarySensorPresence(BinarySensor):
 
