@@ -56,5 +56,5 @@ def appliance_switch(
             "val": True if power == 'on' else False
         }
         payload = json.dumps(data)
-        status = (static_topic, payload)
+        status = (state_topic, payload)
     return status
