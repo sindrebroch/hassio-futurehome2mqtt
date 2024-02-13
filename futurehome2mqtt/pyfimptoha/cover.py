@@ -49,8 +49,7 @@ def blind(
         "set_position_topic": set_position_topic,
         "set_position_template": """
             {
-                "props":{
-                },
+                "props":{},
                 "serv":"out_lvl_switch",
                 "tags":[],
                 "type":"cmd.lvl.set",

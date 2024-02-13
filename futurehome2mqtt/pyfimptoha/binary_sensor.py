@@ -45,8 +45,8 @@ class BinarySensorPresence(BinarySensor):
         print("BinarySensorPresence status")
         
         value = False
-        if device.get("param") and device['param'].get('presence'):
-            value = device['param']['presence']
+        if self.device.get("param") and self.device['param'].get('presence'):
+            value = self.device['param']['presence']
         
         data = {
             "props": {},

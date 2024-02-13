@@ -21,6 +21,8 @@ class CustomEntity():
 
     mqtt: typing.Any
 
+    device: typing.Any
+
     entity_type: str
     entity_identifier: str
 
@@ -35,6 +37,7 @@ class CustomEntity():
     def __init__(self, mqtt, device):
         print("CustomEntity init")
         self.mqtt = mqtt
+        self.device = device
         self.address = device["fimp"]["address"]
         self.name = device["client"]["name"]
         self.room = utils.get_room(device)
@@ -66,5 +69,5 @@ class CustomEntity():
     def status(self, data):
         print("CustomEntity status")
         payload = json.dumps(data)
-        status = (state_topic, payload)
+        status = (self.state_topic, payload)
         return status
