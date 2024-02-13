@@ -33,6 +33,7 @@ class CustomEntity():
     component_name: str
 
     def __init__(self, mqtt, device):
+        print("CustomEntity init")
         self.mqtt = mqtt
         self.address = device["fimp"]["address"]
         self.name = device["client"]["name"]
@@ -41,12 +42,14 @@ class CustomEntity():
         self.identifier =  f"fh_{self.address}_{self.entity_identifier}"
 
     def publish(self):
-        mqtt.publish(
+        print("CustomEntity publish")
+        self.mqtt.publish(
             f"homeassistant/{self.entity_type}/{self.identifier}/config", 
             json.dumps(self.component())
         )
 
     def component(self):
+        print("CustomEntity component")
         return {
             "name": self.component_name,
             "object_id": self.identifier,
@@ -60,10 +63,8 @@ class CustomEntity():
             }
         }
 
-    def status(self):
-        print("Status Entity")
-        # payload = json.dumps(data)
-        # status = (self.state_topic, payload)
-        return {
-            "name": "test"
-        }
+    def status(self, data):
+        print("CustomEntity status")
+        payload = json.dumps(data)
+        status = (state_topic, payload)
+        return status

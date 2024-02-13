@@ -22,13 +22,14 @@ class BinarySensorPresence(BinarySensor):
         device, 
         service
     ):
-        print("Init BinarySensorPresence")
+        print("BinarySensorPresence init")
         self.component_name = "Motion"
         self.entity_identifier =  "sensor_presence"
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"
         super().__init__(mqtt, device)
 
     def component(self):
+        print("BinarySensorPresence component")
         return super().component().update({
             "device_class": "motion",
             "payload_off": False,
@@ -37,13 +38,16 @@ class BinarySensorPresence(BinarySensor):
         })
 
     def publish(self):
-        print("Publish BinarySensorPresence")
+        print("BinarySensorPresence publish")
         super().publish()
 
     def status(self):
+        print("BinarySensorPresence status")
+        
         value = False
         if device.get("param") and device['param'].get('presence'):
             value = device['param']['presence']
+        
         data = {
             "props": {},
             "serv": "sensor_presence",
@@ -51,10 +55,8 @@ class BinarySensorPresence(BinarySensor):
             "val_t": "bool",
             "val": value
         }
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-        return status
-
+        return super().status(data)
+        
 def sensor_presence(
     device: typing.Any,
     mqtt,
