@@ -10,7 +10,9 @@ import pyfimptoha.utils as utils
 
 class BinarySensor(entity.CustomEntity):
 
-    self.entity_type = "binary_sensor"
+    def __init__(self, mqtt, device):
+        self.entity_type = "binary_sensor"
+        super().__init__(mqtt, device)
 
 class BinarySensorPresence(BinarySensor):
 
