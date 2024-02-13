@@ -11,3 +11,8 @@ STATE_CLASS_MEASUREMENT = "measurement"
 
 DEVICE_CLASS_ENERGY = "energy"
 DEVICE_CLASS_POWER = "power"
+DEVICE_CLASS_MOTION = "motion"
+
+SERVICE_SENSOR_PRESENCE = "sensor_presence"
+
+PLATFORM_BINARY_SENSOR = "binary_sensor"

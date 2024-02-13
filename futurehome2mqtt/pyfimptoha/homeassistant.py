@@ -3,7 +3,8 @@ import time
 
 import paho.mqtt.client as client
 
-import pyfimptoha.binary_sensor as binary_sensor
+import pyfimptoha.binary_sensor as bs
+import pyfimptoha.const as const
 import pyfimptoha.cover as cover
 import pyfimptoha.sensor as sensor
 import pyfimptoha.switch as switch
@@ -47,6 +48,12 @@ def create_components(
             except KeyError:
                 _type = None
 
+
+            match service_name:
+                case const.SERVICE_SENSOR_PRESENCE:
+                    entity = bs.BinarySensorPresence(mqtt, device, service, service_name)
+                    statuses.append(entity.status())
+
             if service_name == "battery":
                 print(f"- Service: {service_name}")
                 status = sensor.battery(
@@ -75,11 +82,6 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-            elif service_name == "sensor_presence":
-                print(f"- Service: {service_name}")
-                bs = binary_sensor.BinarySensorPresence(mqtt, device, service)
-                bs.publish()
-                status = bs.status()
             elif service_name == "sensor_temp":
                 print(f"- Service: {service_name}")
                 status = sensor.sensor_temp(

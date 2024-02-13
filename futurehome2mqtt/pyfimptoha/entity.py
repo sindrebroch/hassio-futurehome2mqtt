@@ -3,19 +3,6 @@ import typing
 
 import pyfimptoha.utils as utils
 
-class Device():
-    name: str
-    identifieres: str or typing.Any
-    model: str
-    suggested_area: str
-
-class Component():
-    name: str
-    object_id: str
-    unique_id: str
-    state_topic: str
-    device: Device
-    device_class: str
 
 class CustomEntity():
 
@@ -26,6 +13,9 @@ class CustomEntity():
     entity_type: str
     entity_identifier: str
 
+    id: str
+    thing: str
+    functionality: str
     address: str
     name: str
     room: str
@@ -35,24 +25,43 @@ class CustomEntity():
     component_name: str
 
     def __init__(self, mqtt, device):
-        print("CustomEntity init")
         self.mqtt = mqtt
         self.device = device
-        self.address = device["fimp"]["address"]
+
+        self.id = device["id"]
         self.name = device["client"]["name"]
+        self.thing = device["thing"]
+        self.address = device["fimp"]["address"]
+        self.functionality = device["functionality"]
         self.room = utils.get_room(device)
         self.model = utils.get_model(device)
         self.identifier =  f"fh_{self.address}_{self.entity_identifier}"
 
+        self.debug()
+        self.publish()
+
+    def debug(self):
+        print(f"-----")
+        print(f"Debug: {self.name}")
+        print(f"- ID: {self.id}")
+        print(f"- Thing: {self.thing}")
+        print(f"- Address: {self.address}")
+        print(f"- Room: {self.room}")
+        print(f"- Model: {self.model}")
+        print(f"- Functionality: {self.functionality}")
+        print(f"- Device: {self.device}")
+        print(f"- Entity type: {self.entity_type}")
+        print(f"- Entity identifier: {self.entity_identifier}")
+
     def publish(self):
-        print("CustomEntity publish")
+        component = self.component()
+        print(f"component {component}")
         self.mqtt.publish(
             f"homeassistant/{self.entity_type}/{self.identifier}/config", 
-            json.dumps(self.component())
+            json.dumps(component)
         )
 
     def component(self):
-        print("CustomEntity component")
         return {
             "name": self.component_name,
             "object_id": self.identifier,
@@ -67,7 +76,6 @@ class CustomEntity():
         }
 
     def status(self, data):
-        print("CustomEntity status")
         payload = json.dumps(data)
         status = (self.state_topic, payload)
         return status

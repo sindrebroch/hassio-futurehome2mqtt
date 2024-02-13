@@ -4,6 +4,7 @@ Creates binary_sensors in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimptoha.const as const
 import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
@@ -12,93 +13,40 @@ class BinarySensor(entity.CustomEntity):
 
     def __init__(self, mqtt, device):
         super().__init__(mqtt, device)
-        self.entity_type = "binary_sensor"
+        self.entity_type = const.PLATFORM_BINARY_SENSOR
 
 class BinarySensorPresence(BinarySensor):
 
-    def __init__(
-        self, 
-        mqtt, 
-        device, 
-        service
-    ):
-        print("BinarySensorPresence init")
-        self.component_name = "Motion"
-        self.entity_identifier =  "sensor_presence"
+    component_name = "Motion"
+
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = component_name
+        self.entity_identifier = const.SERVICE_SENSOR_PRESENCE
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"
         super().__init__(mqtt, device)
+        print(f"Service - {service}")
+        print(f"Service name - {service_name}")
 
     def component(self):
-        print("BinarySensorPresence component")
         return super().component().update({
-            "device_class": "motion",
+            "device_class": utils.DEVICE_CLASS_MOTION,
             "payload_off": False,
             "payload_on": True,
             "value_template": "{{ value_json.val }}",
         })
 
-    def publish(self):
-        print("BinarySensorPresence publish")
-        super().publish()
-
     def status(self):
-        print("BinarySensorPresence status")
-        
+
         value = False
         if self.device.get("param") and self.device['param'].get('presence'):
             value = self.device['param']['presence']
         
         data = {
             "props": {},
-            "serv": "sensor_presence",
+            "serv": const.SERVICE_SENSOR_PRESENCE,
             "type": "evt.presence.report",
             "val_t": "bool",
             "val": value
         }
+
         return super().status(data)
-        
-def sensor_presence(
-    device: typing.Any,
-    mqtt,
-    service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
-
-    identifier = f"fh_{address}_sensor_presence"
-    state_topic = f"pt:j1/mt:evt{service['addr']}"
-    component = {
-        "name": "Bevegelse",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "state_topic": state_topic,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "device_class": "motion",
-        "payload_off": False,
-        "payload_on": True,
-        "value_template": "{{ value_json.val }}",
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/binary_sensor/{identifier}/config", payload)
-
-    # Queue statuses
-    value = False
-    if device.get("param") and device['param'].get('presence'):
-        value = device['param']['presence']
-    data = {
-        "props": {},
-        "serv": "sensor_presence",
-        "type": "evt.presence.report",
-        "val_t": "bool",
-        "val": value
-    }
-    payload = json.dumps(data)
-    status = (state_topic, payload)
-    return status
