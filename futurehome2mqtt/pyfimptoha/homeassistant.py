@@ -1,6 +1,7 @@
 import json
 import time
 import paho.mqtt.client as client
+import pyfimptoha.binary_sensor as binary_sensor
 import pyfimptoha.cover as cover
 import pyfimptoha.sensor as sensor
 import pyfimptoha.light as light
@@ -74,7 +75,7 @@ def create_components(
                 )
             elif service_name == "sensor_presence":
                 print(f"- Service: {service_name}")
-                status = sensor.sensor_presence(
+                status = binary_sensor.sensor_presence(
                     device=device,
                     mqtt=mqtt,
                     service=service,
