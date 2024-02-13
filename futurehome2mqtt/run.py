@@ -2,11 +2,6 @@ import paho.mqtt.client as mqtt
 import os, sys, time
 import pyfimptoha.client as fimp
 
-"""
-todo Refactor these functions, move to pyfimptoha/client.py
-"""
-
-
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     global connected

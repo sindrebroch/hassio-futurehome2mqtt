@@ -11,7 +11,20 @@ This addon configure devices and their capabilities from Future Home in Home Ass
 
 ## Supported Futurehome devices
 
-- 
+### Implemented
+
+- binary_sensor
+    - presence
+- cover
+- futurehome-mode
+- light
+- lock
+- sensor
+    - battery
+    - humidity
+    - luminance
+    - meter_elec
+    - temperature
 
 ### 1. Home Assistant MQTT
 

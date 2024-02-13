@@ -1,9 +1,12 @@
 import json
 import time
+
 import paho.mqtt.client as client
+
 import pyfimptoha.binary_sensor as binary_sensor
 import pyfimptoha.cover as cover
 import pyfimptoha.sensor as sensor
+import pyfimptoha.switch as switch
 import pyfimptoha.light as light
 import pyfimptoha.lock as lock
 import pyfimptoha.utils as utils
@@ -13,8 +16,7 @@ def create_components(
     mqtt: client,
 ):
     """
-    Creates HA components out of FIMP devices
-    by pushing them to HA using mqtt discovery
+    Creates HA components out of FIMP devices by pushing them to HA using mqtt discovery
     """
 
     print('Received list of devices from FIMP. FIMP reported %s devices' % (len(devices)))
@@ -59,7 +61,7 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-            elif service_name == "meter_elec": # wattage vs energy
+            elif service_name == "meter_elec":
                 print(f"- Service: {service_name}")
                 status = sensor.meter_elec(
                     device=device,
@@ -94,6 +96,20 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
+            elif service_name == "sensor_power":
+                print(f"- Service: {service_name}")
+            elif service_name == "media_player":
+                print(f"- Service: {service_name}")
+            elif service_name == "basic":
+                print(f"- Service: {service_name}")
+            elif service_name == "thermostat":
+                print(f"- Service: {service_name}")
+            elif service_name == "vinculum":
+                print(f"- Service: {service_name}")
+            elif service_name == "user_code":
+                print(f"- Service: {service_name}")
+            elif service_name == "technology_specific":
+                print(f"- Service: {service_name}")
 
             if status:
                 statuses.append(status)
@@ -137,45 +153,11 @@ def create_components(
                 # Binary switch
                 if service_name == "out_bin_switch":
                     print(f"- Service: {functionality} - {service_name}")
-                    identifier = f"fh_{address}_{service_name}"
-                    command_topic = f"pt:j1/mt:cmd{service['addr']}"
-                    state_topic   = f"pt:j1/mt:evt{service['addr']}"
-                    component = {
-                        "name": "Switch",
-                        "object_id": identifier,
-                        "unique_id": identifier,
-                        "device": { 
-                            "name": name,
-                            "identifiers": address,
-                            "model": model,
-                            "suggested_area": room if room is not None else "Unknown"
-                        },
-                        "device_class": "outlet",
-                        "schema": "template",
-                        "command_topic": command_topic,
-                        "state_topic": state_topic,
-                        "payload_on":  '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
-                        "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',
-                        "value_template": '{{ value_json.val }}',
-                        "state_on": True,
-                        "state_off": False,
-                    }
-                    payload = json.dumps(component)
-                    mqtt.publish(f"homeassistant/switch/{identifier}/config", payload)
-
-                    # Push statuses
-                    if device.get("param") and device['param'].get('power'):
-                        power = device['param']['power']
-                        data = {
-                            "props": {},
-                            "serv": "out_bin_switch",
-                            "type": "cmd.binary.report",
-                            "val_t": "bool",
-                            "val": True if power == 'on' else False
-                        }
-                        payload = json.dumps(data)
-                        statuses.append((state_topic, payload))
-
+                    status = switch.appliance_switch(
+                        device=device,
+                        mqtt=mqtt,
+                        service=service,
+                    )
                 pass
 
     mqtt.loop()

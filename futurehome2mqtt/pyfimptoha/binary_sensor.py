@@ -8,9 +8,9 @@ import pyfimptoha.utils as utils
 
 
 def sensor_presence(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]

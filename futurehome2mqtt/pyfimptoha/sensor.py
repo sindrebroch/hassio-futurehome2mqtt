@@ -7,9 +7,9 @@ import typing
 import pyfimptoha.utils as utils
 
 def battery(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
@@ -54,11 +54,22 @@ def battery(
         status = (state_topic, payload)
     return status
 
+def sensor_power(
+    device: typing.Any,
+    mqtt,
+    service,
+):
+    address = device["fimp"]["address"]
+    name = device["client"]["name"]
+    room = device["room"]
+    model = utils.get_model(device)
+
+    return
 
 def sensor_lumin(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
@@ -105,9 +116,9 @@ def sensor_lumin(
     return status
 
 def sensor_temp(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
@@ -153,9 +164,9 @@ def sensor_temp(
     return status
 
 def sensor_humid(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
@@ -202,9 +213,9 @@ def sensor_humid(
 
 
 def meter_elec(
-        device: typing.Any,
-        mqtt,
-        service,
+    device: typing.Any,
+    mqtt,
+    service,
 ):
     address = device["fimp"]["address"]
     name = device["client"]["name"]
