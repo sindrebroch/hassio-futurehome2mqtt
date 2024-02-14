@@ -60,8 +60,8 @@ class SensorLuminance(Sensor):
         return comp
 
     def add_status(self, statuses):
-        if device.get("param") and device['param'].get('illuminance'):
-            value = device['param']['illuminance']
+        if self.device.get("param") and self.device['param'].get('illuminance'):
+            value = self.device['param']['illuminance']
             data = {
                 "props": {
                     "unit": unit_of_measurement
@@ -90,8 +90,8 @@ class SensorTemperature(Sensor):
         return comp
 
     def add_status(self, statuses):
-        if device.get("param") and device['param'].get('temperature'):
-            value = device['param']['temperature']
+        if self.device.get("param") and self.device['param'].get('temperature'):
+            value = self.device['param']['temperature']
             data = {
                 "props": {
                     "unit": unit_of_measurement
@@ -120,8 +120,8 @@ class SensorHumidity(Sensor):
         return comp
 
     def add_status(self, statuses):
-        if device.get("param") and device['param'].get('humidity'):
-            value = device['param']['humidity']
+        if self.device.get("param") and self.device['param'].get('humidity'):
+            value = self.device['param']['humidity']
             data = {
                 "props": {
                     "unit": unit_of_measurement
