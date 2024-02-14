@@ -64,7 +64,7 @@ class SensorLuminance(Sensor):
             value = self.device['param']['illuminance']
             data = {
                 "props": {
-                    "unit": unit_of_measurement
+                    "unit": self.unit_of_measurement
                 },
                 "serv": "sensor_lumin",
                 "type": "evt.sensor.report",
@@ -94,7 +94,7 @@ class SensorTemperature(Sensor):
             value = self.device['param']['temperature']
             data = {
                 "props": {
-                    "unit": unit_of_measurement
+                    "unit": self.unit_of_measurement
                 },
                 "serv": "sensor_temp",
                 "type": "evt.sensor.report",
@@ -124,7 +124,7 @@ class SensorHumidity(Sensor):
             value = self.device['param']['humidity']
             data = {
                 "props": {
-                    "unit": unit_of_measurement
+                    "unit": self.unit_of_measurement
                 },
                 "serv": "sensor_humid",
                 "type": "evt.sensor.report",
