@@ -15,7 +15,6 @@ from pyfimptoha.entity import UnknownEntity
 from pyfimptoha.lock import DoorLock
 from pyfimptoha.meter_elec import SensorMeterElec
 from pyfimptoha.sensor import (
-    meter_elec,
     SensorAtmo,
     SensorBattery,
     SensorHumidity,

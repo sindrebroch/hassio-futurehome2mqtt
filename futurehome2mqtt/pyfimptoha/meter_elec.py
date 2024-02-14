@@ -11,8 +11,9 @@ import pyfimptoha.utils as utils
 class Sensor(entity.CustomEntity):
 
     def __init__(self, mqtt, device, service, service_name):
-        self.entity_type = const.PLATFORM_SENSOR
-        super().__init__(mqtt, device, service, service_name)
+        print("Init sensor")
+        #self.entity_type = const.PLATFORM_SENSOR
+        #super().__init__(mqtt, device, service, service_name)
 
 class SensorMeterElec(Sensor):
 
