@@ -12,12 +12,14 @@ import pyfimptoha.utils as utils
 class BinarySensor(entity.CustomEntity):
 
     def __init__(self, mqtt, device):
+        print("BinarySensor init")
         super().__init__(mqtt, device)
         self.entity_type = const.PLATFORM_BINARY_SENSOR
 
 class BinarySensorPresence(BinarySensor):
 
     def __init__(self, mqtt, device, service, service_name):
+        print("BinarySensorPresence init")
         self.component_name = "Motion"
         self.entity_identifier = const.SERVICE_SENSOR_PRESENCE
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"

@@ -25,6 +25,8 @@ class CustomEntity():
     component_name: str
 
     def __init__(self, mqtt, device):
+        print("CustomEntity init")
+        
         self.mqtt = mqtt
         self.device = device
 
