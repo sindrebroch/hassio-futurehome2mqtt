@@ -32,11 +32,11 @@ class Client:
         mqtt = self._mqtt
 
         # Request FIMP mode
-        mqtt.subscribe(_topic_receive_mode)
+        mqtt.subscribe(self._topic_receive_mode)
         fimp.send_mode_request(mqtt)
 
         # Request FIMP devices
-        mqtt.subscribe(_topic_discover)
+        mqtt.subscribe(self._topic_discover)
         fimp.send_discovery_request(mqtt)
 
         # Subscribe to home assistant status where ha announces restarts
