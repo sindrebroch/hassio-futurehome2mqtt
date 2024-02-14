@@ -5,6 +5,7 @@ Creates lock in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimptoha.const as const
 import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
