@@ -22,7 +22,6 @@ class CustomEntity():
     name: str
     room: str
     model: str
-    state_topic: str
     component_name: str
 
     identifier: str
@@ -47,7 +46,7 @@ class CustomEntity():
         self.command_topic = f"pt:j1/mt:cmd{service['addr']}"
         self.state_topic   = f"pt:j1/mt:evt{service['addr']}"
 
-        self.debug()
+        # self.debug()
         self.publish()
 
     def debug(self):
@@ -92,3 +91,8 @@ class CustomEntity():
         payload = json.dumps(data)
         status = (self.state_topic, payload)
         return status
+
+class UnknownEntity(CustomEntity):
+
+    def __init__(self, mqtt, device, service, service_name):
+        print(f"- Service {service_name} not yet implemented")

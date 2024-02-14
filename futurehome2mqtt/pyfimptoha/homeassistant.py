@@ -3,14 +3,25 @@ import time
 
 import paho.mqtt.client as client
 
-import pyfimptoha.binary_sensor as bs
 import pyfimptoha.const as const
 import pyfimptoha.cover as cover
-import pyfimptoha.sensor as sensor
 import pyfimptoha.switch as switch
 import pyfimptoha.light as light
 import pyfimptoha.lock as lock
 import pyfimptoha.utils as utils
+
+from pyfimptoha.binary_sensor import BinarySensorPresence
+from pyfimptoha.entity import UnknownEntity
+from pyfimptoha.meter_elec import SensorMeterElec
+from pyfimptoha.sensor import (
+    meter_elec,
+    SensorAtmo,
+    SensorBattery,
+    SensorHumidity,
+    SensorLuminance,
+    SensorTemperature,
+    SensorPower,
+)
 
 def create_components(
     devices: list,
@@ -33,12 +44,12 @@ def create_components(
         room = device["room"]
         model = utils.get_model(device)
 
-        print(f"Creating: {address} - {name}")
-        print(f"- IDs: {id} - {thing} - {address}")
-        print(f"- Room: {room}")
-        print(f"- Model: {model}")
-        print(f"- Functionality: {functionality}")
-        print(f"- Device: {device}")
+        #print(f"Creating: {address} - {name}")
+        #print(f"- IDs: {id} - {thing} - {address}")
+        #print(f"- Room: {room}")
+        #print(f"- Model: {model}")
+        #print(f"- Functionality: {functionality}")
+        #print(f"- Device: {device}")
 
         for service_name, service in device["services"].items():
             status = None
@@ -47,28 +58,30 @@ def create_components(
 
             match service_name:
                 case "sensor_presence":
-                    entity = bs.BinarySensorPresence(mqtt, device, service, service_name)
+                    entity = BinarySensorPresence(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "sensor_lumin":
-                    entity = sensor.SensorLuminance(mqtt, device, service, service_name)
+                    entity = SensorLuminance(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "sensor_temp":
-                    entity = sensor.SensorTemperature(mqtt, device, service, service_name)
+                    entity = SensorTemperature(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "sensor_humid":
-                    entity = sensor.SensorHumidity(mqtt, device, service, service_name)
+                    entity = SensorHumidity(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "sensor_atmo":
-                    entity = sensor.SensorAtmo(mqtt, device, service, service_name)
+                    entity = SensorAtmo(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "sensor_power":
-                    entity = sensor.SensorPower(mqtt, device, service, service_name)
+                    entity = SensorPower(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "battery":
-                    entity = sensor.SensorBattery(mqtt, device, service, service_name)
+                    entity = SensorBattery(mqtt, device, service, service_name)
                     entity.add_status(statuses)
+                case "meter_elec":
+                    SensorMeterElec(mqtt, device, service, service_name)
                 case _:
-                    print(f"Service {service_name} not yet implemented")
+                    UnknownEntity(mqtt, device, service, service_name)
 
             if _type == "blinds" and service_name == "out_lvl_switch":
                 print(f"- Service: {service_name} (as blind/cover)")
@@ -77,35 +90,6 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-            elif service_name == "meter_elec":
-                print(f"- Service: {service_name}")
-                status = sensor.meter_elec(
-                    device=device,
-                    mqtt=mqtt,
-                    service=service,
-                )
-            elif service_name == "media_player":
-                print(f"- Service: {service_name}")
-            elif service_name == "basic":
-                print(f"- Service: {service_name}")
-            elif service_name == "thermostat":
-                print(f"- Service: {service_name}")
-            elif service_name == "vinculum":
-                print(f"- Service: {service_name}")
-            elif service_name == "user_code":
-                print(f"- Service: {service_name}")
-            elif service_name == "technology_specific":
-                print(f"- Service: {service_name}")
-            elif service_name == "alarm_burglar":
-                print(f"- Service: {service_name}")
-            elif service_name == "alarm_emergency":
-                print(f"- Service: {service_name}")
-            elif service_name == "alarm_lock":
-                print(f"- Service: {service_name}")
-            elif service_name == "dev_sys":
-                print(f"- Service: {service_name}")
-            elif service_name == "version":
-                print(f"- Service: {service_name}")
 
             if status:
                 statuses.append(status)
