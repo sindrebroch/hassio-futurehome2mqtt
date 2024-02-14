@@ -13,8 +13,8 @@ class BinarySensor(entity.CustomEntity):
 
     def __init__(self, mqtt, device):
         print("BinarySensor init")
-        super().__init__(mqtt, device)
         self.entity_type = const.PLATFORM_BINARY_SENSOR
+        super().__init__(mqtt, device)
 
 class BinarySensorPresence(BinarySensor):
 
