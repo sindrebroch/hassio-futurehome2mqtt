@@ -36,8 +36,8 @@ class SensorBattery(Sensor):
 
         status = None
 
-        if device.get("param") and device['param'].get('batteryPercentage'):
-            value = device['param']['batteryPercentage']
+        if self.device.get("param") and self.device['param'].get('batteryPercentage'):
+            value = self.device['param']['batteryPercentage']
             data = {
                 "props": {
                     "unit": self.unit_of_measurement
