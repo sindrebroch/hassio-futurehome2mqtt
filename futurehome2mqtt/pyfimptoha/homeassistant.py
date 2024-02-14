@@ -6,7 +6,7 @@ import paho.mqtt.client as client
 import pyfimptoha.const as const
 import pyfimptoha.utils as utils
 
-from pyfimptoha.binary_sensor import BinarySensorPresence
+from pyfimptoha.binary_sensor import BinarySensorPresence, BinarySensorContact
 from pyfimptoha.cover import Cover
 from pyfimptoha.entity import UnknownEntity
 from pyfimptoha.light import Light, LightSwitch
@@ -67,6 +67,9 @@ def create_components( devices: list, mqtt: client ):
                     entity.add_status(statuses)
                 case "sensor_price":
                     entity = SensorPrice(mqtt, device, service, service_name)
+                    entity.add_status(statuses)
+                case "sensor_contact":
+                    entity = BinarySensorContact(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "battery":
                     entity = SensorBattery(mqtt, device, service, service_name)
