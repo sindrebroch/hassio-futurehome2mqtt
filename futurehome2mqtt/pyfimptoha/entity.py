@@ -13,7 +13,7 @@ class CustomEntity():
 
     entity_type: str
     entity_identifier: str
-    unit_of_measurement: str or None
+    unit_of_measurement: str or None = None
 
     id: str
     thing: str
