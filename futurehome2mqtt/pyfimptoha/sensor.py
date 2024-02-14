@@ -168,6 +168,37 @@ class SensorAtmo(Sensor):
             }
             statuses.append(super().status(data))
 
+class SensorPower(Sensor):
+
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "Power"
+        self.entity_identifier = "power"
+        self.unit_of_measurement = "W"
+        super().__init__(mqtt, device, service, service_name)
+
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "power",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
+
+    def add_status(self, statuses):
+        if self.device.get("param") and self.device['param'].get('wattage'):
+            value = self.device['param']['wattage']
+            data = {
+                "props": {
+                    "unit": self.unit_of_measurement
+                },
+                "serv": "sensor_power",
+                "type": "evt.sensor.report",
+                "val": value,
+                "val_t": "float",
+            }
+            statuses.append(super().status(data))
+
 
 def meter_elec(
     device: typing.Any,

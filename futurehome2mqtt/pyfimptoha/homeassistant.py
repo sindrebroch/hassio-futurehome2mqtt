@@ -61,11 +61,14 @@ def create_components(
                 case "sensor_atmo":
                     entity = sensor.SensorAtmo(mqtt, device, service, service_name)
                     entity.add_status(statuses)
+                case "sensor_power":
+                    entity = sensor.SensorPower(mqtt, device, service, service_name)
+                    entity.add_status(statuses)
                 case "battery":
                     entity = sensor.SensorBattery(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case _:
-                    print(f"{service_name} not yet classified")
+                    print(f"Service {service_name} not yet implemented")
 
             if _type == "blinds" and service_name == "out_lvl_switch":
                 print(f"- Service: {service_name} (as blind/cover)")
@@ -81,8 +84,6 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-            elif service_name == "sensor_power":
-                print(f"- Service: {service_name}")
             elif service_name == "media_player":
                 print(f"- Service: {service_name}")
             elif service_name == "basic":
