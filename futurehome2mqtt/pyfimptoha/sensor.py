@@ -43,54 +43,35 @@ class SensorBattery(Sensor):
             }
             statuses.append(super().status(data))
 
-def sensor_lumin(
-    device: typing.Any,
-    mqtt,
-    service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
+class SensorLuminance(Sensor):
 
-    identifier = f"fh_{address}_illuminance"
-    state_topic = f"pt:j1/mt:evt{service['addr']}"
-    unit_of_measurement = const.UOM_LUX
-    component = {
-        "name": "Belysningsstyrke",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "state_topic": state_topic,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "device_class": "illuminance",
-        "unit_of_measurement": unit_of_measurement,
-        "value_template": "{{ value_json.val | round(0) }}"
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/sensor/{identifier}/config", payload)
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "Illuminance"
+        self.entity_identifier = "illuminance"
+        self.unit_of_measurement = const.UOM_LUX
+        super().__init__(mqtt, device, service, service_name)
 
-    # Queue statuses
-    status = None
-    if device.get("param") and device['param'].get('illuminance'):
-        value = device['param']['illuminance']
-        data = {
-            "props": {
-                "unit": unit_of_measurement
-            },
-            "serv": "sensor_lumin",
-            "type": "evt.sensor.report",
-            "val": value,
-            "val_t": "float",
-        }
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "illuminance",
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
 
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-    return status
+    def add_status(self, statuses):
+        if device.get("param") and device['param'].get('illuminance'):
+            value = device['param']['illuminance']
+            data = {
+                "props": {
+                    "unit": unit_of_measurement
+                },
+                "serv": "sensor_lumin",
+                "type": "evt.sensor.report",
+                "val": value,
+                "val_t": "float",
+            }
+            statuses.append(super().status(data))
 
 def sensor_temp(
     device: typing.Any,

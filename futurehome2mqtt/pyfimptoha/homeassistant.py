@@ -52,6 +52,10 @@ def create_components(
                 case "battery":
                     entity = sensor.SensorBattery(mqtt, device, service, service_name)
                     entity.add_status(statuses)
+                case "sensor_lumin":
+                    entity = sensor.SensorLuminance(mqtt, device, service, service_name)
+                    entity.add_status(statuses)
+
 
             if _type == "blinds" and service_name == "out_lvl_switch":
                 print(f"- Service: {service_name} (as blind/cover)")
@@ -63,13 +67,6 @@ def create_components(
             elif service_name == "meter_elec":
                 print(f"- Service: {service_name}")
                 status = sensor.meter_elec(
-                    device=device,
-                    mqtt=mqtt,
-                    service=service,
-                )
-            elif service_name == "sensor_lumin":
-                print(f"- Service: {service_name}")
-                status = sensor.sensor_lumin(
                     device=device,
                     mqtt=mqtt,
                     service=service,
