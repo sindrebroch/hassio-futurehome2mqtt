@@ -5,6 +5,7 @@ import json
 import typing
 
 import pyfimptoha.const as const
+import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
 class Cover(entity.CustomEntity):

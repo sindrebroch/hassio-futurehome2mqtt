@@ -78,13 +78,14 @@ def create_components( devices: list, mqtt: client ):
                 case "door_lock":
                     entity = DoorLock(mqtt, device, service, service_name)
                     entity.add_status(statuses)
-                case "out_lvl_switch":
-                    if _type == "blinds":
-                        Cover(mqtt, device, service, service_name)
-                    else:
-                        print(f"{service_name} with unknown type {_type}")
                 case "meter_elec":
                     SensorMeterElec(mqtt, device, service, service_name)
+                case "out_lvl_switch":
+                    match _type:
+                        case  "blinds":
+                            Cover(mqtt, device, service, service_name)
+                        case _:
+                            print(f"{service_name} with unknown type {_type}")
                 case _:
                     UnknownEntity(mqtt, device, service, service_name)
 
