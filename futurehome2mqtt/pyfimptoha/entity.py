@@ -124,8 +124,6 @@ class UnknownEntity(CustomEntity):
         "chargepoint",
         "virtual_meter_elec",
         "user_code",
-        #"sensor_price",
-        #"sensor_contact",
         "out_lvl_switch"
     ]
 
