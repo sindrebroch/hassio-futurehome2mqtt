@@ -20,7 +20,3 @@ def get_room(device: typing.Any):
     room = device["room"]
     return room if room is not None else "Unknown"
 
-def add_status(entity, statuses):
-    status = entity.status()
-    if status:
-        statuses.append(status)

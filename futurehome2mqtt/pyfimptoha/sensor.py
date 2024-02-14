@@ -30,10 +30,7 @@ class SensorBattery(Sensor):
         })
         return comp
 
-    def status(self):
-
-        status = None
-
+    def add_status(self, statuses):
         if self.device.get("param") and self.device['param'].get('batteryPercentage'):
             value = self.device['param']['batteryPercentage']
             data = {
@@ -44,57 +41,7 @@ class SensorBattery(Sensor):
                 "type": "evt.health.report",
                 "val": value,
             }
-            return super().status(data)
-
-        return status
-
-def battery(
-    device: typing.Any,
-    mqtt,
-    service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
-
-    identifier = f"fh_{address}_battery"
-    state_topic = f"pt:j1/mt:evt{service['addr']}"
-    unit_of_measurement = const.UOM_PERCENTAGE
-    component = {
-        "name": "Batteri",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "state_topic": state_topic,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "device_class": "battery",
-        "unit_of_measurement": unit_of_measurement,
-        "value_template": "{{ value_json.val | round(0) }}"
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/sensor/{identifier}/config", payload)
-
-    # Queue statuses
-    status = None
-    if device.get("param") and device['param'].get('batteryPercentage'):
-        value = device['param']['batteryPercentage']
-        data = {
-            "props": {
-                "unit": unit_of_measurement
-            },
-            "serv": "battery",
-            "type": "evt.health.report",
-            "val": value,
-        }
-
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-    return status
+            statuses.append(super().status(data))
 
 def sensor_lumin(
     device: typing.Any,

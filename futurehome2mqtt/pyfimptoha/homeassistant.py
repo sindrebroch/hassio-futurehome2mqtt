@@ -48,11 +48,10 @@ def create_components(
             match service_name:
                 case const.SERVICE_SENSOR_PRESENCE:
                     entity = bs.BinarySensorPresence(mqtt, device, service, service_name)
-                    utils.add_status(entity)
+                    entity.add_status(statuses)
                 case "battery":
                     entity = sensor.SensorBattery(mqtt, device, service, service_name)
-                    utils.add_status(entity)
-
+                    entity.add_status(statuses)
 
             if _type == "blinds" and service_name == "out_lvl_switch":
                 print(f"- Service: {service_name} (as blind/cover)")

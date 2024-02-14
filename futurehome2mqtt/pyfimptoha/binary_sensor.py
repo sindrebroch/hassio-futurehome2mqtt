@@ -32,9 +32,11 @@ class BinarySensorPresence(BinarySensor):
         })
         return comp
 
-    def status(self):
+    def add_status(self, statuses):
 
+        # todo unknown
         value = False
+
         if self.device.get("param") and self.device['param'].get('presence'):
             value = self.device['param']['presence']
         
@@ -46,4 +48,4 @@ class BinarySensorPresence(BinarySensor):
             "val": value
         }
 
-        return super().status(data)
+        statuses.append(super().status(data))
