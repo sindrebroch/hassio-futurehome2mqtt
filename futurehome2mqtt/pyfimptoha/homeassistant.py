@@ -4,13 +4,13 @@ import time
 import paho.mqtt.client as client
 
 import pyfimptoha.const as const
-import pyfimptoha.cover as cover
 import pyfimptoha.switch as switch
 import pyfimptoha.light as light
 import pyfimptoha.lock as lock
 import pyfimptoha.utils as utils
 
 from pyfimptoha.binary_sensor import BinarySensorPresence
+from pyfimptoha.cover import Cover
 from pyfimptoha.entity import UnknownEntity
 from pyfimptoha.lock import DoorLock
 from pyfimptoha.meter_elec import SensorMeterElec
@@ -78,20 +78,15 @@ def create_components( devices: list, mqtt: client ):
                 case "door_lock":
                     entity = DoorLock(mqtt, device, service, service_name)
                     entity.add_status(statuses)
+                case "out_lvl_switch":
+                    if _type == "blinds":
+                        Cover(mqtt, device, service, service_name)
+                    else:
+                        print(f"{service_name} with unknown type {_type}")
                 case "meter_elec":
                     SensorMeterElec(mqtt, device, service, service_name)
                 case _:
                     UnknownEntity(mqtt, device, service, service_name)
-
-            if _type == "blinds" and service_name == "out_lvl_switch":
-                print(f"- Service: {service_name} (as blind/cover)")
-                status = cover.blind(
-                    device=device,
-                    mqtt=mqtt,
-                    service=service,
-                )
-            if status:
-                statuses.append(status)
 
             # Lights
             elif functionality == "lighting":
