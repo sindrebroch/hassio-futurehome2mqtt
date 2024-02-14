@@ -29,7 +29,7 @@ class BinarySensorPresence(BinarySensor):
 
     def component(self):
         return super().component().update({
-            "device_class": utils.DEVICE_CLASS_MOTION,
+            "device_class": const.DEVICE_CLASS_MOTION,
             "payload_off": False,
             "payload_on": True,
             "value_template": "{{ value_json.val }}",
