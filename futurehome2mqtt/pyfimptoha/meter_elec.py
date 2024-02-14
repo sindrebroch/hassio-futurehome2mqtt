@@ -1,5 +1,5 @@
 """
-Creates sensors in Home Assistant based on FIMP services
+Creates meter_elec in Home Assistant based on FIMP services
 """
 import json
 import typing
