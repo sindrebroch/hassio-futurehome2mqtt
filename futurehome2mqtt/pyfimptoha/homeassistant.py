@@ -48,10 +48,12 @@ def create_components(
             match service_name:
                 case const.SERVICE_SENSOR_PRESENCE:
                     entity = bs.BinarySensorPresence(mqtt, device, service, service_name)
-                    statuses.append(entity.status())
+                    status = entity.status()
+                    statuses.append(status) if status
                 case "battery":
                     entity = sensor.SensorBattery(mqtt, device, service, service_name)
-                    statuses.append(entity.status())
+                    status = entity.status()
+                    statuses.append(status) if status
 
 
 

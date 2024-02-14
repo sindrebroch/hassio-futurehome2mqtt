@@ -21,8 +21,6 @@ class SensorBattery(Sensor):
         self.entity_identifier = "battery"
         self.unit_of_measurement = const.UOM_PERCENTAGE
         super().__init__(mqtt, device, service, service_name)
-        print(f"Service - {service}")
-        print(f"Service name - {service_name}")
 
     def component(self):
         comp = super().component()

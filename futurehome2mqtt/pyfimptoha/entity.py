@@ -30,8 +30,6 @@ class CustomEntity():
     state_topic: str
 
     def __init__(self, mqtt, device, service, service_name):
-        print("CustomEntity init")
-
         self.mqtt = mqtt
         self.device = device
         self.service = service
