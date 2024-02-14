@@ -94,7 +94,7 @@ class CustomEntity():
 
 class UnknownEntity(CustomEntity):
 
-    unsupported_services: [
+    unsupported_services = [
         "dev_sys", 
         "indicator_ctrl", 
         "version",
@@ -107,6 +107,6 @@ class UnknownEntity(CustomEntity):
     ]
 
     def __init__(self, mqtt, device, service, service_name):
-        if service_name not in unsupported_services:
+        if service_name not in self.unsupported_services:
             print(f"- Service {service_name} not yet implemented")
             print(f"- Device {device}")
