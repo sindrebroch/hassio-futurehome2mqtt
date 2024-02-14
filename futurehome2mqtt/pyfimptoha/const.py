@@ -15,5 +15,7 @@ DEVICE_CLASS_MOTION = "motion"
 
 PLATFORM_BINARY_SENSOR = "binary_sensor"
 PLATFORM_COVER = "cover"
+PLATFORM_LIGHT = "light"
 PLATFORM_LOCK = "lock"
 PLATFORM_SENSOR = "sensor"
+PLATFORM_SWITCH = "switch"

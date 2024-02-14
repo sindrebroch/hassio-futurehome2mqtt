@@ -12,6 +12,7 @@ import pyfimptoha.utils as utils
 from pyfimptoha.binary_sensor import BinarySensorPresence
 from pyfimptoha.cover import Cover
 from pyfimptoha.entity import UnknownEntity
+from pyfimptoha.light import Light, LightSwitch
 from pyfimptoha.lock import DoorLock
 from pyfimptoha.meter_elec import SensorMeterElec
 from pyfimptoha.sensor import (
@@ -22,6 +23,7 @@ from pyfimptoha.sensor import (
     SensorTemperature,
     SensorPower,
 )
+from pyfimptoha.switch import Switch
 
 def create_components( devices: list, mqtt: client ):
     """
@@ -33,26 +35,15 @@ def create_components( devices: list, mqtt: client ):
     statuses = []
 
     for device in devices:
-        id = device["id"]
-        thing = device["thing"]
         address = device["fimp"]["address"]
         name = device["client"]["name"]
-        functionality = device["functionality"]
-        room = device["room"]
-        model = utils.get_model(device)
-
         print(f"Device: {address} - {name}")
-        #print(f"- IDs: {id} - {thing} - {address}")
-        #print(f"- Room: {room}")
-        #print(f"- Model: {model}")
-        #print(f"- Functionality: {functionality}")
-        #print(f"- Device: {device}")
 
         for service_name, service in device["services"].items():
             status = None
             _type = utils.get_type(device)
 
-
+            # https://github.com/futurehomeno/fimp-api/blob/master/device_services/device_services.md
             match service_name:
                 case "sensor_presence":
                     entity = BinarySensorPresence(mqtt, device, service, service_name)
@@ -82,48 +73,24 @@ def create_components( devices: list, mqtt: client ):
                     SensorMeterElec(mqtt, device, service, service_name)
                 case "out_lvl_switch":
                     match _type:
-                        case  "blinds":
+                        case "blinds":
                             Cover(mqtt, device, service, service_name)
+                            entity.add_status(statuses)
+                        case "light":
+                            Light(mqtt, device, service, service_name)
+                            entity.add_status(statuses)
                         case _:
                             UnknownEntity(mqtt, device, service, service_name)
+                case "out_bin_switch":
+                    match _type:
+                        case "appliance" | None:
+                            Switch(mqtt, device, service, service_name)
+                            entity.add_status(statuses)
+                        case "light":
+                            LightSwitch(mqtt, device, service, service_name)
+                            entity.add_status(statuses)
                 case _:
                     UnknownEntity(mqtt, device, service, service_name)
-
-            # Lights
-            if functionality == "lighting":
-                status = None
-                if service_name == "out_lvl_switch":
-                    print(f"- Service: {functionality} - {service_name}")
-                    status = light.out_lvl_switch(
-                        service_name=service_name,
-                        device=device,
-                        mqtt=mqtt,
-                        service=service,
-                    )
-                elif service_name == "out_bin_switch":
-                    print(f"- Service: {functionality} - {service_name}")
-                    status = light.out_bin_switch(
-                        service_name=service_name,
-                        device=device,
-                        mqtt=mqtt,
-                        service=service,
-                    )
-
-                if status:
-                    statuses.append(status)
-
-            # Appliance
-            elif functionality == "appliance":
-                # Binary switch
-                if service_name == "out_bin_switch":
-                    print(f"- Service: {functionality} - {service_name}")
-                    status = switch.appliance_switch(
-                        device=device,
-                        mqtt=mqtt,
-                        service_name=service_name,
-                        service=service,
-                    )
-                pass
 
     mqtt.loop()
     time.sleep(2)

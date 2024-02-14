@@ -1,60 +1,48 @@
 """
-Creates binary_sensors in Home Assistant based on FIMP services
+Creates switches in Home Assistant based on FIMP services
 """
 import json
 import typing
 
+import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
+class Switch(entity.CustomEntity):
 
-def appliance_switch(
-    device: typing.Any,
-    mqtt,
-    service_name,
-    service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
+    def __init__(self, mqtt, device, service, service_name):
+        self.entity_type = const.PLATFORM_SWITCH
+        self.component_name = "Switch"
+        self.entity_identifier = "switch"
+        super().__init__(mqtt, device, service, service_name)
 
-    identifier = f"fh_{address}_{service_name}"
-    command_topic = f"pt:j1/mt:cmd{service['addr']}"
-    state_topic   = f"pt:j1/mt:evt{service['addr']}"
-    component = {
-        "name": "Switch",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "device_class": "outlet",
-        "schema": "template",
-        "command_topic": command_topic,
-        "state_topic": state_topic,
-        "payload_on":  '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
-        "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',
-        "value_template": '{{ value_json.val }}',
-        "state_on": True,
-        "state_off": False,
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/switch/{identifier}/config", payload)
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "outlet",
+            "schema": "template",
+            "command_topic": self.command_topic,
+            "state_topic": self.state_topic,
+            "payload_on":  '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":true,"val_t":"bool"}',
+            "payload_off": '{"props":{},"serv":"out_bin_switch","tags":[],"type":"cmd.binary.set","val":false,"val_t":"bool"}',
+            "value_template": '{{ value_json.val }}',
+            "state_on": True,
+            "state_off": False,
+        })
+        return comp
 
-    # Queue statuses
-    value = False
-    if device.get("param") and device['param'].get('power'):
-        power = device['param']['power']
+    def add_status(self, statuses):
+
+        value = False
+
+        if device.get("param") and device['param'].get('power'):
+            value = device['param']['power'] == 'on'
+
         data = {
             "props": {},
             "serv": "out_bin_switch",
             "type": "cmd.binary.report",
             "val_t": "bool",
-            "val": True if power == 'on' else False
+            "val": value
         }
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-    return status
+
+        statuses.append(super().status(data))
