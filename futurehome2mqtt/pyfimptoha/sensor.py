@@ -142,7 +142,7 @@ class SensorAtmo(Sensor):
     def __init__(self, mqtt, device, service, service_name):
         self.component_name = "Pressure"
         self.entity_identifier = "pressure"
-        self.unit_of_measurement = "kPa"
+        self.unit_of_measurement = "hPa"
         super().__init__(mqtt, device, service, service_name)
 
     def component(self):
@@ -150,7 +150,7 @@ class SensorAtmo(Sensor):
         comp.update({
             "device_class": "atmospheric_pressure",
             "state_class": const.STATE_CLASS_MEASUREMENT,
-            "value_template": "{{ value_json.val | round(0) }}"
+            "value_template": "{{ value_json.val | round(1) }}"
         })
         return comp
 
