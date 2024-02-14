@@ -19,7 +19,7 @@ class BinarySensorPresence(BinarySensor):
 
     def __init__(self, mqtt, device, service, service_name):
         self.component_name = "Motion"
-        self.entity_identifier = const.SERVICE_SENSOR_PRESENCE
+        self.entity_identifier = "sensor_presence"
         super().__init__(mqtt, device, service, service_name)
 
     def component(self):
@@ -42,7 +42,7 @@ class BinarySensorPresence(BinarySensor):
         
         data = {
             "props": {},
-            "serv": const.SERVICE_SENSOR_PRESENCE,
+            "serv": "sensor_presence",
             "type": "evt.presence.report",
             "val_t": "bool",
             "val": value

@@ -26,6 +26,7 @@ class SensorBattery(Sensor):
         comp = super().component()
         comp.update({
             "device_class": "battery",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
             "value_template": "{{ value_json.val | round(0) }}"
         })
         return comp
@@ -55,6 +56,7 @@ class SensorLuminance(Sensor):
         comp = super().component()
         comp.update({
             "device_class": "illuminance",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
             "value_template": "{{ value_json.val | round(0) }}"
         })
         return comp
@@ -85,6 +87,7 @@ class SensorTemperature(Sensor):
         comp = super().component()
         comp.update({
             "device_class": "temperature",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
             "value_template": "{{ value_json.val | round(0) }}"
         })
         return comp
@@ -115,6 +118,7 @@ class SensorHumidity(Sensor):
         comp = super().component()
         comp.update({
             "device_class": "humidity",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
             "value_template": "{{ value_json.val | round(0) }}"
         })
         return comp
@@ -132,6 +136,17 @@ class SensorHumidity(Sensor):
                 "val_t": "float",
             }
             statuses.append(super().status(data))
+
+class SensorAtmo(Sensor):
+
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "Pressure"
+        self.entity_identifier = "pressure"
+        self.unit_of_measurement = "hPa"
+        device_class = "atmospheric_pressure"
+        state_class = "measurement"
+
+        self.debug()
 
 
 def meter_elec(
