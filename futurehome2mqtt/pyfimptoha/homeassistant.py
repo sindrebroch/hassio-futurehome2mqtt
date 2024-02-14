@@ -89,7 +89,7 @@ def create_components( devices: list, mqtt: client ):
                     UnknownEntity(mqtt, device, service, service_name)
 
             # Lights
-            elif functionality == "lighting":
+            if functionality == "lighting":
                 status = None
                 if service_name == "out_lvl_switch":
                     print(f"- Service: {functionality} - {service_name}")
