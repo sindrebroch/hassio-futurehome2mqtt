@@ -95,4 +95,6 @@ class CustomEntity():
 class UnknownEntity(CustomEntity):
 
     def __init__(self, mqtt, device, service, service_name):
-        print(f"- Service {service_name} not yet implemented")
+        if service_name not in ["dev_sys", "indicator_ctrl", "version", "basic"]:
+            print(f"- Service {service_name} not yet implemented")
+            print(f"- Device {device}")
