@@ -143,10 +143,30 @@ class SensorAtmo(Sensor):
         self.component_name = "Pressure"
         self.entity_identifier = "pressure"
         self.unit_of_measurement = "hPa"
-        device_class = "atmospheric_pressure"
-        state_class = "measurement"
+        super().__init__(mqtt, device, service, service_name)
 
-        self.debug()
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "atmospheric_pressure",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
+
+    def add_status(self, statuses):
+        if self.device.get("param") and self.device['param'].get('pressure'):
+            value = self.device['param']['pressure']
+            data = {
+                "props": {
+                    "unit": self.unit_of_measurement
+                },
+                "serv": "sensor_atmo",
+                "type": "evt.sensor.report",
+                "val": value,
+                "val_t": "float",
+            }
+            statuses.append(super().status(data))
 
 
 def meter_elec(
