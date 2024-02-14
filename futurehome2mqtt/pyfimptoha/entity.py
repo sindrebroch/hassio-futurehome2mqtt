@@ -26,7 +26,7 @@ class CustomEntity():
 
     def __init__(self, mqtt, device):
         print("CustomEntity init")
-        
+
         self.mqtt = mqtt
         self.device = device
 
@@ -57,11 +57,11 @@ class CustomEntity():
         print(f"- Device: {self.device}")
 
     def publish(self):
-        component = self.component()
-        print(f"component {component}")
+        t = self.component()
+        print(f"component {t}")
         self.mqtt.publish(
             f"homeassistant/{self.entity_type}/{self.identifier}/config", 
-            json.dumps(component)
+            json.dumps(t)
         )
 
     def component(self):

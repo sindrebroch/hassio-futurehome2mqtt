@@ -28,12 +28,18 @@ class BinarySensorPresence(BinarySensor):
         print(f"Service name - {service_name}")
 
     def component(self):
-        return super().component().update({
+        t = super().component()
+        u = t.update({
             "device_class": const.DEVICE_CLASS_MOTION,
             "payload_off": False,
             "payload_on": True,
             "value_template": "{{ value_json.val }}",
         })
+
+        print(f"t {t}")
+        print(f"u {u}")
+
+        return u
 
     def status(self):
 
