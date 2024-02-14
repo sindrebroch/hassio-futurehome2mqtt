@@ -85,7 +85,7 @@ def create_components( devices: list, mqtt: client ):
                         case  "blinds":
                             Cover(mqtt, device, service, service_name)
                         case _:
-                            print(f"{service_name} with unknown type {_type}")
+                            UnknownEntity(mqtt, device, service, service_name)
                 case _:
                     UnknownEntity(mqtt, device, service, service_name)
 
