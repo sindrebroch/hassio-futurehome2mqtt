@@ -23,10 +23,7 @@ from pyfimptoha.sensor import (
     SensorPower,
 )
 
-def create_components(
-    devices: list,
-    mqtt: client,
-):
+def create_components( devices: list, mqtt: client ):
     """
     Creates HA components out of FIMP devices by pushing them to HA using mqtt discovery
     """

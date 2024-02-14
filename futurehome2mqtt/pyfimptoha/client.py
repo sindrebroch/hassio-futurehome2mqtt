@@ -10,8 +10,9 @@ class Client:
     _devices = [] # discovered fimp devices
     _mqtt = None
     _topic_discover = "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:flow1"
+    _topic_receive_mode = "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:mode"
     _topic_fimp_event = "pt:j1/mt:evt/rt:dev/rn:zw/ad:1/"
-    _topic_ha = "homeassistant/"
+    _topic_ha_status = "homeassistant/status"
     _verbose = False
 
     def __init__(
@@ -31,17 +32,15 @@ class Client:
         mqtt = self._mqtt
 
         # Request FIMP mode
-        topic_receive_mode = "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:mode"
-        mqtt.subscribe(topic_receive_mode)
+        mqtt.subscribe(_topic_receive_mode)
         fimp.send_mode_request(mqtt)
 
         # Request FIMP devices
-        topic_discover = "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:flow1"
-        mqtt.subscribe(topic_discover)
+        mqtt.subscribe(_topic_discover)
         fimp.send_discovery_request(mqtt)
 
         # Subscribe to home assistant status where ha announces restarts
-        self._mqtt.subscribe("homeassistant/status")
+        self._mqtt.subscribe(self._topic_ha_status)
 
     def on_message(self, client, userdata, msg):
         """
@@ -56,13 +55,13 @@ class Client:
                 devices=data["val"]["param"]["device"],
                 mqtt=self._mqtt,
             )
-        elif msg.topic == "pt:j1/mt:rsp/rt:app/rn:homeassistant/ad:mode":
+        elif msg.topic == self._topic_receive_mode:
             # Create mode sensor  (home, away, sleep and vacation)
             data = json.loads(payload)
             mode.create(
                 mqtt=self._mqtt,
                 data=data,
             )
-        elif msg.topic == "homeassistant/status" and payload == "online":
+        elif msg.topic == self._topic_ha_status and payload == "online":
             # Home Assistant was restarted - Push everything again
             self.start()
