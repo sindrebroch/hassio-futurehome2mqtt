@@ -80,6 +80,7 @@ def create_components( devices: list, mqtt: client ):
                         case "light":
                             Light(mqtt, device, service, service_name)
                             entity.add_status(statuses)
+                        # None
                         case _:
                             UnknownEntity(mqtt, device, service, service_name)
                 case "out_bin_switch":

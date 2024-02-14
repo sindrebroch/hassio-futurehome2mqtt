@@ -217,7 +217,7 @@ class SensorCO2(Sensor):
         return comp
 
     def add_status(self, statuses):
-        print(f"Status for CO2 {device}")
+        print(f"Status for CO2 {self.device}")
 
         value = "Unknown"
         data = {

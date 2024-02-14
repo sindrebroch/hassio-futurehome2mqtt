@@ -109,14 +109,17 @@ class UnknownEntity(CustomEntity):
         "technology_specific",
         "ota",
         "fan_ctrl",
-        # "scene_ctrl"
-        # "sensor_co2"
-        # "sensor_rain"
-        # "sensor_wind"
-        # sensor_gust
-        # sensor_direct
-        # sensor_noise
-        # sensor_baro
+        "scene_ctrl",
+        "sensor_rain",
+        "sensor_wind",
+        "sensor_gust",
+        "sensor_direct",
+        "sensor_noise",
+        "sensor_baro",
+        "sensor_seismicint",
+        "sensor_accelz",
+        "sensor_accely",
+        "sensor_accelx"
     ]
 
     def __init__(self, mqtt, device, service, service_name):
