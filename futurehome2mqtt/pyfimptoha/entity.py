@@ -119,10 +119,15 @@ class UnknownEntity(CustomEntity):
         "sensor_seismicint",
         "sensor_accelz",
         "sensor_accely",
-        "sensor_accelx"
+        "sensor_accelx",
+        "chargepoint",
+        "virtual_meter_elec",
+        #"sensor_contact",
+        #"out_lvl_switch"
     ]
 
     def __init__(self, mqtt, device, service, service_name):
         if service_name not in self.unsupported_services:
-            print(f"- Service {service_name} not yet implemented")
-            print(f"{device}")
+            _type = utils.get_type(device)
+            print(f"- Service {service_name} not yet implemented - {type}")
+            print(f"- {device}")
