@@ -12,6 +12,7 @@ import pyfimptoha.utils as utils
 
 from pyfimptoha.binary_sensor import BinarySensorPresence
 from pyfimptoha.entity import UnknownEntity
+from pyfimptoha.lock import DoorLock
 from pyfimptoha.meter_elec import SensorMeterElec
 from pyfimptoha.sensor import (
     meter_elec,
@@ -78,6 +79,9 @@ def create_components(
                 case "battery":
                     entity = SensorBattery(mqtt, device, service, service_name)
                     entity.add_status(statuses)
+                case "door_lock":
+                    entity = DoorLock(mqtt, device, service, service_name)
+                    entity.add_status(statuses)
                 case "meter_elec":
                     SensorMeterElec(mqtt, device, service, service_name)
                 case _:
@@ -93,17 +97,6 @@ def create_components(
 
             if status:
                 statuses.append(status)
-
-            # Door lock
-            elif _type == "door_lock":
-                print(f"- Service: {service_name}")
-                status = lock.door_lock(
-                    device=device,
-                    mqtt=mqtt,
-                    service=service,
-                )
-                if status:
-                    statuses.append(status)
 
             # Lights
             elif functionality == "lighting":

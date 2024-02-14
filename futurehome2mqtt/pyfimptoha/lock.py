@@ -5,53 +5,38 @@ Creates lock in Home Assistant based on FIMP services
 import json
 import typing
 
+import pyfimptoha.entity as entity
 import pyfimptoha.utils as utils
 
-def door_lock(
-        device: typing.Any,
-        mqtt,
-        service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
+class DoorLock(entity.CustomEntity):
 
-    identifier = f"fh_{address}_door_lock"
-    command_topic = f"pt:j1/mt:cmd{service['addr']}"
-    state_topic   = f"pt:j1/mt:evt{service['addr']}"
-    component = {
-        "name": "Dørlås",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "command_topic": command_topic,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "state_topic": state_topic,
-        "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',
-        "payload_unlock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":false,"val_t":"bool"}',
-        "value_template": '{{ iif(value_json.val["is_secured"], "LOCKED", "UNLOCKED", None) }}',
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/lock/{identifier}/config", payload)
+    def __init__(self, mqtt, device, service, service_name):
+        self.entity_type = const.PLATFORM_LOCK
+        self.component_name = "Door Lock"
+        self.entity_identifier = "door_lock"
+        super().__init__(mqtt, device, service, service_name)
 
-    # Queue statuses
-    status = None
-    if device.get("param") and device['param'].get('lockState'):
-        lockState = device['param']['lockState']
-        data = {
-            "props": {},
-            "serv": "door_lock",
-            "type": "evt.lock.report",
-            "val_t": "bool_map",
-            "val": {
-                "is_secured": True if lockState == 'locked' else False,
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',
+            "payload_unlock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":false,"val_t":"bool"}',
+            "value_template": '{{ iif(value_json.val["is_secured"], "LOCKED", "UNLOCKED", None) }}',
+        })
+        return comp
+
+    def add_status(self, statuses):
+        if self.device.get("param") and self.device['param'].get('lockState'):
+            value = self.device['param']['lockState']
+        
+            data = {
+                "props": {},
+                "serv": "door_lock",
+                "type": "evt.lock.report",
+                "val_t": "bool_map",
+                "val": {
+                    "is_secured": True if lockState == 'locked' else False,
+                }
             }
-        }
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-    return status
+
+            statuses.append(super().status(data))
