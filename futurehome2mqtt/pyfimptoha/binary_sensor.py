@@ -17,10 +17,8 @@ class BinarySensor(entity.CustomEntity):
 
 class BinarySensorPresence(BinarySensor):
 
-    component_name = "Motion"
-
     def __init__(self, mqtt, device, service, service_name):
-        self.component_name = component_name
+        self.component_name = "Motion"
         self.entity_identifier = const.SERVICE_SENSOR_PRESENCE
         self.state_topic = f"pt:j1/mt:evt{service['addr']}"
         super().__init__(mqtt, device)
