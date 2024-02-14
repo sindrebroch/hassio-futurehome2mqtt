@@ -41,7 +41,7 @@ def create_components( devices: list, mqtt: client ):
         room = device["room"]
         model = utils.get_model(device)
 
-        #print(f"Creating: {address} - {name}")
+        print(f"Device: {address} - {name}")
         #print(f"- IDs: {id} - {thing} - {address}")
         #print(f"- Room: {room}")
         #print(f"- Model: {model}")
