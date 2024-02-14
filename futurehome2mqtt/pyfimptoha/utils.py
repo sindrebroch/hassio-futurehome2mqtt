@@ -4,6 +4,12 @@ Utils for FIMP services
 
 import typing
 
+def get_type(device: typing.Any):
+    try:
+        _type = device['type']['type']
+    except KeyError:
+        _type = None
+
 def get_model(device: typing.Any):
     try:
         return device["modelAlias"]

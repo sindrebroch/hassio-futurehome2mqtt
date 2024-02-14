@@ -49,9 +49,10 @@ class CustomEntity():
         print(f"- Room: {self.room}")
         print(f"- Model: {self.model}")
         print(f"- Functionality: {self.functionality}")
-        print(f"- Device: {self.device}")
         print(f"- Entity type: {self.entity_type}")
         print(f"- Entity identifier: {self.entity_identifier}")
+        print(f"- Identifier: {self.identifier}")
+        print(f"- Device: {self.device}")
 
     def publish(self):
         component = self.component()

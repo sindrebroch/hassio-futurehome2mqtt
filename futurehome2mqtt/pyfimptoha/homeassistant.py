@@ -42,12 +42,7 @@ def create_components(
 
         for service_name, service in device["services"].items():
             status = None
-
-            try:
-                _type = device['type']['type']
-            except KeyError:
-                _type = None
-
+            _type = utils.get_type(device)
 
             match service_name:
                 case const.SERVICE_SENSOR_PRESENCE:
