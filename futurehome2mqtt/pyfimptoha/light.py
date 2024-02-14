@@ -57,8 +57,8 @@ class Light(LightEntity):
         return comp
 
     def add_status(self, statuses):
-        if device.get("param") and device['param'].get('power'):
-            power = device['param']['power']
+        if self.device.get("param") and self.device['param'].get('power'):
+            power = self.device['param']['power']
             if power == "off":
                 data = {
                     "props": {},
@@ -68,7 +68,7 @@ class Light(LightEntity):
                     "val": False
                 }
             else:
-                dim_value = device['param']['dimValue']
+                dim_value = self.device['param']['dimValue']
                 data = {
                     "props": {},
                     "serv": "out_bin_switch",
@@ -120,14 +120,14 @@ class LightSwitch(LightEntity):
         return comp
 
     def add_status(self, statuses):
-        if device.get("param") and device['param'].get('power'):
-            power = device['param']['power']
+        if self.device.get("param") and self.device['param'].get('power'):
+            value = self.device['param']['power']
             data = {
                 "props": {},
                 "serv": "out_bin_switch",
                 "type": "cmd.binary.report",
                 "val_t": "bool",
-                "val": True if power == 'on' else False
+                "val": True if value == 'on' else False
             }
 
             statuses.append(super().status(data))

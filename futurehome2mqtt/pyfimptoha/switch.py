@@ -5,6 +5,7 @@ import json
 import typing
 
 import pyfimptoha.entity as entity
+import pyfimptoha.const as const
 import pyfimptoha.utils as utils
 
 class Switch(entity.CustomEntity):
@@ -34,8 +35,8 @@ class Switch(entity.CustomEntity):
 
         value = False
 
-        if device.get("param") and device['param'].get('power'):
-            value = device['param']['power'] == 'on'
+        if self.device.get("param") and self.device['param'].get('power'):
+            value = self.device['param']['power'] == 'on'
 
         data = {
             "props": {},

@@ -142,7 +142,7 @@ class SensorAtmo(Sensor):
     def __init__(self, mqtt, device, service, service_name):
         self.component_name = "Pressure"
         self.entity_identifier = "pressure"
-        self.unit_of_measurement = "hPa"
+        self.unit_of_measurement = "kPa"
         super().__init__(mqtt, device, service, service_name)
 
     def component(self):
@@ -180,6 +180,37 @@ class SensorPower(Sensor):
         comp = super().component()
         comp.update({
             "device_class": "power",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
+
+    def add_status(self, statuses):
+        if self.device.get("param") and self.device['param'].get('wattage'):
+            value = self.device['param']['wattage']
+            data = {
+                "props": {
+                    "unit": self.unit_of_measurement
+                },
+                "serv": "sensor_power",
+                "type": "evt.sensor.report",
+                "val": value,
+                "val_t": "float",
+            }
+            statuses.append(super().status(data))
+
+class SensorCO2(Sensor):
+
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "CO2"
+        self.entity_identifier = "co2"
+        self.unit_of_measurement = "ppm"
+        super().__init__(mqtt, device, service, service_name)
+
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "carbon_dioxide",
             "state_class": const.STATE_CLASS_MEASUREMENT,
             "value_template": "{{ value_json.val | round(0) }}"
         })
