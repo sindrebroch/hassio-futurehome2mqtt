@@ -29,17 +29,19 @@ class BinarySensorPresence(BinarySensor):
 
     def component(self):
         t = super().component()
-        u = t.update({
+
+        print(f"DEBUG t {t}")
+
+        t.update({
             "device_class": const.DEVICE_CLASS_MOTION,
             "payload_off": False,
             "payload_on": True,
             "value_template": "{{ value_json.val }}",
         })
 
-        print(f"t {t}")
-        print(f"u {u}")
+        print(f"DEBUG u {t}")
 
-        return u
+        return t
 
     def status(self):
 
