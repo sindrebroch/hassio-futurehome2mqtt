@@ -73,53 +73,36 @@ class SensorLuminance(Sensor):
             }
             statuses.append(super().status(data))
 
-def sensor_temp(
-    device: typing.Any,
-    mqtt,
-    service,
-):
-    address = device["fimp"]["address"]
-    name = device["client"]["name"]
-    room = device["room"]
-    model = utils.get_model(device)
+class SensorTemperature(Sensor):
 
-    identifier = f"fh_{address}_temperature"
-    state_topic = f"pt:j1/mt:evt{service['addr']}"
-    unit_of_measurement = const.UOM_TEMPERATURE
-    component = {
-        "name": "Temperatur",
-        "object_id": identifier,
-        "unique_id": identifier,
-        "state_topic": state_topic,
-        "device": { 
-            "name": name,
-            "identifiers": address,
-            "model": model,
-            "suggested_area": room if room is not None else "Unknown"
-        },
-        "device_class": "temperature",
-        "unit_of_measurement": unit_of_measurement,
-        "value_template": "{{ value_json.val | round(0) }}"
-    }
-    payload = json.dumps(component)
-    mqtt.publish(f"homeassistant/sensor/{identifier}/config", payload)
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "Temperature"
+        self.entity_identifier = "temperature"
+        self.unit_of_measurement = const.UOM_TEMPERATURE
+        super().__init__(mqtt, device, service, service_name)
 
-    # Queue statuses
-    status = None
-    if device.get("param") and device['param'].get('temperature'):
-        value = device['param']['temperature']
-        data = {
-            "props": {
-                "unit": unit_of_measurement
-            },
-            "serv": "sensor_temp",
-            "type": "evt.sensor.report",
-            "val": value,
-            "val_t": "float",
-        }
-        payload = json.dumps(data)
-        status = (state_topic, payload)
-    return status
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "temperature",
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
+
+    def add_status(self, statuses):
+        if device.get("param") and device['param'].get('temperature'):
+            value = device['param']['temperature']
+            data = {
+                "props": {
+                    "unit": unit_of_measurement
+                },
+                "serv": "sensor_temp",
+                "type": "evt.sensor.report",
+                "val": value,
+                "val_t": "float",
+            }
+            statuses.append(super().status(data))
+
 
 def sensor_humid(
     device: typing.Any,
