@@ -217,15 +217,16 @@ class SensorCO2(Sensor):
         return comp
 
     def add_status(self, statuses):
-        if self.device.get("param") and self.device['param'].get('wattage'):
-            value = self.device['param']['wattage']
-            data = {
-                "props": {
-                    "unit": self.unit_of_measurement
-                },
-                "serv": "sensor_power",
-                "type": "evt.sensor.report",
-                "val": value,
-                "val_t": "float",
-            }
-            statuses.append(super().status(data))
+        print(f"Status for CO2 {device}")
+
+        value = "Unknown"
+        data = {
+            "props": {
+                "unit": self.unit_of_measurement
+            },
+            "serv": "sensor_co2",
+            "type": "evt.sensor.report",
+            "val": value,
+            "val_t": "float",
+        }
+        statuses.append(super().status(data))
