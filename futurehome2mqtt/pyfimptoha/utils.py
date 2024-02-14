@@ -9,6 +9,7 @@ def get_type(device: typing.Any):
         _type = device['type']['type']
     except KeyError:
         _type = None
+    return _type
 
 def get_model(device: typing.Any):
     try:
