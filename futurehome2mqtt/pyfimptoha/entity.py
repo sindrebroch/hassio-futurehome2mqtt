@@ -7,11 +7,13 @@ import pyfimptoha.utils as utils
 class CustomEntity():
 
     mqtt: typing.Any
-
     device: typing.Any
+    service: typing.Any
+    service_name: str
 
     entity_type: str
     entity_identifier: str
+    unit_of_measurement: str or None
 
     id: str
     thing: str
@@ -20,15 +22,20 @@ class CustomEntity():
     name: str
     room: str
     model: str
-    identifier: str
     state_topic: str
     component_name: str
 
-    def __init__(self, mqtt, device):
+    identifier: str
+    command_topic: str
+    state_topic: str
+
+    def __init__(self, mqtt, device, service, service_name):
         print("CustomEntity init")
 
         self.mqtt = mqtt
         self.device = device
+        self.service = service
+        self.service_name = service_name
 
         self.id = device["id"]
         self.name = device["client"]["name"]
@@ -37,7 +44,10 @@ class CustomEntity():
         self.functionality = device["functionality"]
         self.room = utils.get_room(device)
         self.model = utils.get_model(device)
+        
         self.identifier =  f"fh_{self.address}_{self.entity_identifier}"
+        self.command_topic = f"pt:j1/mt:cmd{service['addr']}"
+        self.state_topic   = f"pt:j1/mt:evt{service['addr']}"
 
         self.debug()
         self.publish()
@@ -54,14 +64,15 @@ class CustomEntity():
         print(f"- Entity type: {self.entity_type}")
         print(f"- Entity identifier: {self.entity_identifier}")
         print(f"- Identifier: {self.identifier}")
+        print(f"- UOM: {self.unit_of_measurement}")
         print(f"- Device: {self.device}")
-
+        print(f"- Service name: {self.service_name}")
+        print(f"- Service: {self.service}")
+        
     def publish(self):
-        t = self.component()
-        print(f"component {t}")
         self.mqtt.publish(
             f"homeassistant/{self.entity_type}/{self.identifier}/config", 
-            json.dumps(t)
+            json.dumps(self.component())
         )
 
     def component(self):
@@ -70,6 +81,7 @@ class CustomEntity():
             "object_id": self.identifier,
             "unique_id": self.identifier,
             "state_topic": self.state_topic,
+            "unit_of_measurement": self.unit_of_measurement,
             "device": { 
                 "name": self.name,
                 "identifiers": self.address,
