@@ -36,7 +36,7 @@ class DoorLock(entity.CustomEntity):
                 "type": "evt.lock.report",
                 "val_t": "bool_map",
                 "val": {
-                    "is_secured": True if lockState == 'locked' else False,
+                    "is_secured": True if value == 'locked' else False,
                 }
             }
 

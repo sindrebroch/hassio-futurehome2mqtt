@@ -93,7 +93,6 @@ def create_components(
                     mqtt=mqtt,
                     service=service,
                 )
-
             if status:
                 statuses.append(status)
 
