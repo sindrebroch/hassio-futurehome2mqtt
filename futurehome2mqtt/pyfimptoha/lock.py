@@ -20,6 +20,8 @@ class DoorLock(entity.CustomEntity):
     def component(self):
         comp = super().component()
         comp.update({
+            "command_topic": self.command_topic,
+            "state_topic": self.state_topic,
             "payload_lock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":true,"val_t":"bool"}',
             "payload_unlock": '{"props":{},"serv":"door_lock","tags":[],"type":"cmd.lock.set","val":false,"val_t":"bool"}',
             "value_template": '{{ iif(value_json.val["is_secured"], "LOCKED", "UNLOCKED", None) }}',
