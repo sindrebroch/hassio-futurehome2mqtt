@@ -4,9 +4,6 @@ import time
 import paho.mqtt.client as client
 
 import pyfimptoha.const as const
-import pyfimptoha.switch as switch
-import pyfimptoha.light as light
-import pyfimptoha.lock as lock
 import pyfimptoha.utils as utils
 
 from pyfimptoha.binary_sensor import BinarySensorPresence
