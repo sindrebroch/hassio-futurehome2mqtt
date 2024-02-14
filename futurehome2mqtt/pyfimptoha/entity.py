@@ -124,8 +124,9 @@ class UnknownEntity(CustomEntity):
         "chargepoint",
         "virtual_meter_elec",
         "user_code",
+        #"sensor_price",
         #"sensor_contact",
-        #"out_lvl_switch"
+        "out_lvl_switch"
     ]
 
     def __init__(self, mqtt, device, service, service_name):

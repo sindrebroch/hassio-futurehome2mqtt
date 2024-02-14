@@ -19,6 +19,7 @@ from pyfimptoha.sensor import (
     SensorLuminance,
     SensorTemperature,
     SensorPower,
+    SensorPrice,
     SensorCO2,
 )
 from pyfimptoha.switch import Switch
@@ -63,6 +64,9 @@ def create_components( devices: list, mqtt: client ):
                     entity.add_status(statuses)
                 case "sensor_co2":
                     entity = SensorCO2(mqtt, device, service, service_name)
+                    entity.add_status(statuses)
+                case "sensor_price":
+                    entity = SensorPrice(mqtt, device, service, service_name)
                     entity.add_status(statuses)
                 case "battery":
                     entity = SensorBattery(mqtt, device, service, service_name)

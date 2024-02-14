@@ -220,11 +220,48 @@ class SensorCO2(Sensor):
         print(f"Status for CO2 {self.device}")
 
         value = "Unknown"
+        if self.device.get("param") and self.device['param'].get('co2'):
+            value = self.device['param']['co2']
+
         data = {
             "props": {
                 "unit": self.unit_of_measurement
             },
             "serv": "sensor_co2",
+            "type": "evt.sensor.report",
+            "val": value,
+            "val_t": "float",
+        }
+        statuses.append(super().status(data))
+
+class SensorPrice(Sensor):
+
+    def __init__(self, mqtt, device, service, service_name):
+        self.component_name = "price"
+        self.entity_identifier = "price"
+        self.unit_of_measurement = "NOK"
+        super().__init__(mqtt, device, service, service_name)
+
+    def component(self):
+        comp = super().component()
+        comp.update({
+            "device_class": "monetary",
+            "state_class": const.STATE_CLASS_MEASUREMENT,
+            "value_template": "{{ value_json.val | round(0) }}"
+        })
+        return comp
+
+    def add_status(self, statuses):
+        value = "Unknown"
+        
+        if self.device.get("param") and self.device['param'].get('price'):
+            value = self.device['param']['price']
+
+        data = {
+            "props": {
+                "unit": self.unit_of_measurement
+            },
+            "serv": "sensor_price",
             "type": "evt.sensor.report",
             "val": value,
             "val_t": "float",
