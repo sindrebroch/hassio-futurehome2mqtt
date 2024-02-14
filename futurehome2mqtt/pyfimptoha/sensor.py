@@ -88,7 +88,7 @@ class SensorTemperature(Sensor):
         comp.update({
             "device_class": "temperature",
             "state_class": const.STATE_CLASS_MEASUREMENT,
-            "value_template": "{{ value_json.val | round(0) }}"
+            "value_template": "{{ value_json.val | round(2) }}"
         })
         return comp
 
