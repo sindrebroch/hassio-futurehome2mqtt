@@ -59,9 +59,9 @@ def create_components( devices: list, mqtt: client ):
                 case "sensor_atmo":
                     entity = SensorAtmo(mqtt, device, service, service_name)
                     entity.add_status(statuses)
-                case "sensor_power":
-                    entity = SensorPower(mqtt, device, service, service_name)
-                    entity.add_status(statuses)
+                #case "sensor_power":
+                #    entity = SensorPower(mqtt, device, service, service_name)
+                #    entity.add_status(statuses)
                 case "sensor_co2":
                     entity = SensorCO2(mqtt, device, service, service_name)
                     entity.add_status(statuses)
