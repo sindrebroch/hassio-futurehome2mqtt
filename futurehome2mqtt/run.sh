@@ -9,9 +9,9 @@ export CLIENT_ID=$(bashio::config 'client_id')
 export DEBUG=$(bashio::config 'debug')
 export PYTHONUNBUFFERED=1
 
-if [ "$FIMPSERVER" == "null" ]; then
-    source .env;
-fi
+#if [ "$FIMPSERVER" == "null" ]; then
+#    source .env;
+#fi
 
 echo Starting Futurehome FIMP to Home Assistant
 python3 run.py serve
